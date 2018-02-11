@@ -60,6 +60,17 @@ int main() {
     Program program(vertexShader.getShaderId(), fragmentShader.getShaderId());
     GLuint programId = program.getProgramId();
 
+    glm::mat4 projection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
+    glm::mat4 view = glm::lookAt(
+	glm::vec3(0, 0, 1),
+	glm::vec3(0, 0, 0),
+	glm::vec3(0, 1, 0)
+    );
+    glm::mat4 model = glm::mat4(1.0);
+    glm::mat4 mvp = projection * view * model;
+
+    GLuint matrixId = glGetUniformLocation(programId, "mvp");
+
     double lastTime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -75,8 +86,8 @@ int main() {
 	    xdelta = -xdelta;
 	}
 
-	glm::mat4 matrix;
-	glm::mat4 vector;
+	// Send MVP to glsl
+	glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
 
 	const GLfloat vertex_data[] = {
 	    xcoord, -1.0f, 0.0f,
