@@ -49,3 +49,7 @@ string Shader::fileToString(string filePath) {
 GLuint Shader::getShaderId() {
     return shaderId;
 }
+
+void Shader::destroy() {
+    glDeleteShader(shaderId); 
+}

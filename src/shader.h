@@ -10,6 +10,7 @@ public:
     Shader(GLenum shaderType);
     Shader(GLenum shaderType, std::string filePath);
     void load(std::string filePath);
+    void destroy();
     GLuint getShaderId();
 
 private:

@@ -10,8 +10,8 @@ GLuint shaders_load(string vertexShaderPath, string fragmentShaderPath) {
     GLuint vertexShaderId = vertexShader.getShaderId();
     GLuint fragmentShaderId = fragmentShader.getShaderId();
     Program program(vertexShader.getShaderId(), fragmentShader.getShaderId());
-    glDeleteShader(vertexShaderId);
-    glDeleteShader(fragmentShaderId);
+    vertexShader.destroy();
+    fragmentShader.destroy();
 
     return program.getProgramId();
 }
