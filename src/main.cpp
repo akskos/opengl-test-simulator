@@ -37,6 +37,7 @@ int main() {
 
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, input::keyboardCallback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
