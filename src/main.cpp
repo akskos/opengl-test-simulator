@@ -4,27 +4,8 @@
 #include <stdlib.h>
 #include <string>
 
-#include "shaders.h"
-
-const char *vertexShaderSource =
-    "#version 320 es\n" \
-    "layout(location = 0) in vec3 vertexPosition_modelspace;\n" \
-    "layout(location = 1) in vec3 vertexColor;\n" \
-    "out vec3 fragmentColor;\n" \
-    "void main() {\n" \
-    "  gl_Position.xyz = vertexPosition_modelspace;\n" \
-    "  gl_Position.w = 1.0;\n" \
-    "  fragmentColor = vertexColor;\n" \
-    "}\n";
-
-const char *fragmentShaderSource =
-    "#version 320 es\n" \
-    "precision mediump float;\n" \
-    "in vec3 fragmentColor;\n" \
-    "out vec3 color;\n" \
-    "void main() {\n" \
-    "  color = fragmentColor;\n" \
-    "}\n";
+#include "program.h"
+#include "shader.h"
 
 const GLfloat vertex_data[] = {
     -1.0f, -1.0f, 0.0f,
@@ -73,12 +54,15 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, cbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(color_data), color_data, GL_STATIC_DRAW);
 
-    GLuint program = shaders_load("src/vertex.shader", "src/fragment.shader");
+    Shader vertexShader(GL_VERTEX_SHADER, "src/vertex.shader");
+    Shader fragmentShader(GL_FRAGMENT_SHADER, "src/fragment.shader");
+    Program program(vertexShader.getShaderId(), fragmentShader.getShaderId());
+    GLuint programId = program.getProgramId();
 
     while (!glfwWindowShouldClose(window)) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(program);
+	glUseProgram(programId);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
