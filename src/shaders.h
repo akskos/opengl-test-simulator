@@ -2,5 +2,6 @@
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 
-GLuint shaders_load(const char *vertexShaderSource, const char *fragmentShaderSource);
+GLuint shaders_load(std::string vertexShaderPath, std::string fragmentShaderPath);

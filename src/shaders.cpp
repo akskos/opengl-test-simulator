@@ -1,34 +1,19 @@
 #include "shaders.h"
+#include "shader.h"
 
-GLuint shaders_load(const char *vertexShaderSource, const char *fragmentShaderSource) {
-    GLint result;
-    int infoLogLength;
-    GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-    GLuint fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(vertexShaderId, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShaderId);
-    glGetShaderiv(vertexShaderId, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(vertexShaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
-    if (infoLogLength > 0) {
-	GLchar *log = (GLchar *)malloc(infoLogLength+1);	
-	glGetShaderInfoLog(vertexShaderId, infoLogLength, NULL, log);
-	printf("%s\n", log);
-	free(log);
-    }
-    glShaderSource(fragmentShaderId, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShaderId);
-    glGetShaderiv(fragmentShaderId, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(fragmentShaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
-    if (infoLogLength > 0) {
-	GLchar *log = (GLchar *)malloc(infoLogLength+1);	
-	glGetShaderInfoLog(fragmentShaderId, infoLogLength, NULL, log);
-	printf("%s\n", log);
-	free(log);
-    }
+using namespace std;
+
+GLuint shaders_load(string vertexShaderPath, string fragmentShaderPath) {
+    Shader vertexShader(GL_VERTEX_SHADER, vertexShaderPath);
+    Shader fragmentShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
+    GLuint vertexShaderId = vertexShader.getShaderId();
+    GLuint fragmentShaderId = fragmentShader.getShaderId();
     GLuint program = glCreateProgram();
     glAttachShader(program, vertexShaderId);
     glAttachShader(program, fragmentShaderId);
     glLinkProgram(program);
+    GLint result;
+    int infoLogLength;
     glGetProgramiv(program, GL_LINK_STATUS, &result);
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 0) {

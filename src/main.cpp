@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 
 #include "shaders.h"
 
@@ -72,7 +73,7 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, cbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(color_data), color_data, GL_STATIC_DRAW);
 
-    GLuint program = shaders_load(vertexShaderSource, fragmentShaderSource);
+    GLuint program = shaders_load("src/vertex.shader", "src/fragment.shader");
 
     while (!glfwWindowShouldClose(window)) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
