@@ -10,6 +10,7 @@
 
 #include "program.h"
 #include "shader.h"
+#include "input.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
+    glfwSetKeyCallback(window, input::keyboardCallback);
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
