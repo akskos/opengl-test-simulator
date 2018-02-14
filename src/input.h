@@ -1,17 +1,18 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
+#include <functional>
+#include <map>
 
-namespace input {
+class InputController {
+public:
     void keyboardCallback(
-	    GLFWwindow *window, 
+	    GLFWwindow *window,
 	    int key, 
 	    int scancode, 
-	    int action, 
-	    int mods) {
+	    int action,
+	    int mods);
+    void addBinding(int key, int action, std::function<void()> callback);
 
-	if (key == GLFW_KEY_ESCAPE) {
-	    glfwTerminate();
-	    exit(0); 
-	}
-    }
+private:
+    std::map<int, std::map<int, std::function<void()>>> callbacks;
 };

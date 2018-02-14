@@ -14,6 +14,8 @@
 
 using namespace std;
 
+InputController input;
+
 const GLfloat color_data[] = {
     0.0f, 0.5f, 1.0f,
     0.0f, 0.5f, 0.2f,
@@ -22,6 +24,25 @@ const GLfloat color_data[] = {
 
 float xcoord = -1.0;
 float xdelta = 0.1;
+float cameraPosition = 0.0;
+float cameraPositionDelta = 0.0;
+
+void moveRight() {
+    cameraPositionDelta = 0.1;
+}
+
+void stopMovingRight() {
+    cameraPositionDelta = 0.0;
+}
+
+void quit() {
+    glfwTerminate();
+    exit(0);
+}
+
+void keyboardCallbackWrapper(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    input.keyboardCallback(window, key, scancode, action, mods); 
+}
 
 int main() {
     GLFWwindow *window;
@@ -36,8 +57,12 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, input::keyboardCallback);
+    glfwSetKeyCallback(window, keyboardCallbackWrapper);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    input.addBinding(GLFW_KEY_D, GLFW_PRESS, moveRight);
+    input.addBinding(GLFW_KEY_D, GLFW_RELEASE, stopMovingRight);
+    input.addBinding(GLFW_KEY_ESCAPE, GLFW_PRESS, quit);
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
@@ -48,7 +73,6 @@ int main() {
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-
 
     GLuint vbo;
     glGenBuffers(1, &vbo);
@@ -90,10 +114,17 @@ int main() {
 	}
 
 	// Send MVP to glsl
+	cameraPosition += cameraPositionDelta * interval;
+	view = glm::lookAt(
+	    glm::vec3(cameraPosition, 0, 1),
+	    glm::vec3(cameraPosition, 0, 0),
+	    glm::vec3(0, 1, 0)
+	);
+	mvp = projection * view * model;
 	glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
 
 	const GLfloat vertex_data[] = {
-	    xcoord, -1.0f, 0.0f,
+	    -1.0f, -1.0f, 0.0f,
 	     1.0f, -1.0f, 0.0f,
 	     0.0f,  1.0f, 0.0f
 	};
