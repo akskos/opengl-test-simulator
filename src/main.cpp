@@ -24,14 +24,12 @@ const GLfloat color_data[] = {
     0.0f, 0.5f, 1.0f
 };
 
-float cameraPositionDelta = 0.0;
-
 void moveRight() {
-    cameraPositionDelta = 0.5;
+    camera.move(glm::vec3(0.5f, 0.0f, 0.0f));
 }
 
 void stopMovingRight() {
-    cameraPositionDelta = 0.0;
+    camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 void quit() {
@@ -97,7 +95,7 @@ int main() {
 	double time = glfwGetTime();
 	double interval = time - lastTime;
 
-	camera.move(glm::vec3(cameraPositionDelta * interval, 0.0f, 0.0f));
+	camera.update(interval);
 	glm::mat4 mvp = camera.getMVP();
 	glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
 
