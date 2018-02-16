@@ -24,13 +24,10 @@ const GLfloat color_data[] = {
     0.0f, 0.5f, 1.0f
 };
 
-float xcoord = -1.0;
-float xdelta = 0.1;
-float cameraPosition = 0.0;
 float cameraPositionDelta = 0.0;
 
 void moveRight() {
-    cameraPositionDelta = 0.1;
+    cameraPositionDelta = 0.5;
 }
 
 void stopMovingRight() {
@@ -100,20 +97,7 @@ int main() {
 	double time = glfwGetTime();
 	double interval = time - lastTime;
 
-	// change xcoord
-	xcoord += xdelta * interval;
-	if (xcoord > 0.5 || xcoord < -1.0) {
-	    xdelta = -xdelta;
-	}
-
-	// Send MVP to glsl
-	//cameraPosition += cameraPositionDelta * interval;
-	//view = glm::lookAt(
-	//    glm::vec3(cameraPosition, 0, 1),
-	//    glm::vec3(cameraPosition, 0, 0),
-	//    glm::vec3(0, 1, 0)
-	//);
-	//mvp = projection * view * model;
+	camera.move(glm::vec3(cameraPositionDelta * interval, 0.0f, 0.0f));
 	glm::mat4 mvp = camera.getMVP();
 	glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
 
