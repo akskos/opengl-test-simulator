@@ -20,6 +20,8 @@ using namespace std;
 InputController input;
 Camera camera;
 
+const GLfloat speed = 2.0f;
+
 const GLfloat color_data[] = {
     0.0f, 0.5f, 1.0f,
     0.0f, 0.5f, 0.2f,
@@ -53,25 +55,25 @@ int main() {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     input.addBinding(GLFW_KEY_D, GLFW_PRESS, []() {
-	camera.move(glm::vec3(0.5f, 0.0f, 0.0f));
+	camera.move(glm::vec3(speed, 0.0f, 0.0f));
     });
     input.addBinding(GLFW_KEY_D, GLFW_RELEASE, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
     });
     input.addBinding(GLFW_KEY_A, GLFW_PRESS, []() {
-	camera.move(glm::vec3(-0.5f, 0.0f, 0.0f));	    
+	camera.move(glm::vec3(-speed, 0.0f, 0.0f));	    
     });
     input.addBinding(GLFW_KEY_A, GLFW_RELEASE, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
     });
     input.addBinding(GLFW_KEY_W, GLFW_PRESS, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, -0.5f));
+	camera.move(glm::vec3(0.0f, 0.0f, -speed));
     });
     input.addBinding(GLFW_KEY_W, GLFW_RELEASE, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
     input.addBinding(GLFW_KEY_S, GLFW_PRESS, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, 0.5f));
+	camera.move(glm::vec3(0.0f, 0.0f, speed));
     });
     input.addBinding(GLFW_KEY_S, GLFW_RELEASE, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
