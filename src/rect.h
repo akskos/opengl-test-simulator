@@ -1,3 +1,6 @@
+#ifndef _RECT_H
+#define _RECT_H
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -16,3 +19,5 @@ private:
     GLuint vbo;
     GLuint cbo;
 };
+
+#endif

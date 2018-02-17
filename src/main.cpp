@@ -13,6 +13,7 @@
 #include "input.h"
 #include "camera.h"
 #include "rect.h"
+#include "floor.h"
 
 using namespace std;
 
@@ -109,6 +110,8 @@ int main() {
 	glm::vec3(-1.0f, 1.0f, -1.0f)	    
     );
 
+    Floor floor;
+
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
@@ -144,6 +147,7 @@ int main() {
 	glDisableVertexAttribArray(1);
 
 	rect.render();
+	floor.render();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
