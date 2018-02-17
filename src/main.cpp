@@ -24,14 +24,6 @@ const GLfloat color_data[] = {
     0.0f, 0.5f, 1.0f
 };
 
-void moveRight() {
-    camera.move(glm::vec3(0.5f, 0.0f, 0.0f));
-}
-
-void stopMovingRight() {
-    camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
-}
-
 void quit() {
     glfwTerminate();
     exit(0);
@@ -57,8 +49,12 @@ int main() {
     glfwSetKeyCallback(window, keyboardCallbackWrapper);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    input.addBinding(GLFW_KEY_D, GLFW_PRESS, moveRight);
-    input.addBinding(GLFW_KEY_D, GLFW_RELEASE, stopMovingRight);
+    input.addBinding(GLFW_KEY_D, GLFW_PRESS, []() {
+	camera.move(glm::vec3(0.5f, 0.0f, 0.0f));
+    });
+    input.addBinding(GLFW_KEY_D, GLFW_RELEASE, []() {
+	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
+    });
     input.addBinding(GLFW_KEY_ESCAPE, GLFW_PRESS, quit);
 
     glewExperimental = GL_TRUE;
