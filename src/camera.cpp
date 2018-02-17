@@ -18,7 +18,7 @@ glm::mat4 Camera::getMVP() {
 
 void Camera::move(glm::vec3 delta) {
     positionDelta = delta;
-    eyesOnDelta = delta;
+    eyesOnDelta.x = delta.x;
 }
 
 void Camera::update(double interval) {

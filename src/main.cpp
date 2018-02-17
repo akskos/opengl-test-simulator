@@ -61,7 +61,19 @@ int main() {
 	camera.move(glm::vec3(-0.5f, 0.0f, 0.0f));	    
     });
     input.addBinding(GLFW_KEY_A, GLFW_RELEASE, []() {
-	camera.move(glm::vec3(0.0, 0.0f, 0.0f));	    
+	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
+    });
+    input.addBinding(GLFW_KEY_W, GLFW_PRESS, []() {
+	camera.move(glm::vec3(0.0f, 0.0f, -0.5f));
+    });
+    input.addBinding(GLFW_KEY_W, GLFW_RELEASE, []() {
+	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
+    });
+    input.addBinding(GLFW_KEY_S, GLFW_PRESS, []() {
+	camera.move(glm::vec3(0.0f, 0.0f, 0.5f));
+    });
+    input.addBinding(GLFW_KEY_S, GLFW_RELEASE, []() {
+	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
     input.addBinding(GLFW_KEY_ESCAPE, GLFW_PRESS, quit);
 
@@ -96,6 +108,9 @@ int main() {
 	glm::vec3(1.0f, 1.0f, -1.0f),	    
 	glm::vec3(-1.0f, 1.0f, -1.0f)	    
     );
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 
     double lastTime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
