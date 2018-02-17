@@ -12,6 +12,7 @@
 #include "shader.h"
 #include "input.h"
 #include "camera.h"
+#include "rect.h"
 
 using namespace std;
 
@@ -46,6 +47,7 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(2);
     glfwSetKeyCallback(window, keyboardCallbackWrapper);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -54,6 +56,12 @@ int main() {
     });
     input.addBinding(GLFW_KEY_D, GLFW_RELEASE, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
+    });
+    input.addBinding(GLFW_KEY_A, GLFW_PRESS, []() {
+	camera.move(glm::vec3(-0.5f, 0.0f, 0.0f));	    
+    });
+    input.addBinding(GLFW_KEY_A, GLFW_RELEASE, []() {
+	camera.move(glm::vec3(0.0, 0.0f, 0.0f));	    
     });
     input.addBinding(GLFW_KEY_ESCAPE, GLFW_PRESS, quit);
 
@@ -81,6 +89,13 @@ int main() {
     GLuint programId = program.getProgramId();
 
     GLuint matrixId = glGetUniformLocation(programId, "mvp");
+
+    Rect rect(
+	glm::vec3(-1.0f, -1.0f, -1.0f),	    
+	glm::vec3(1.0f, -1.0f, -1.0f),	    
+	glm::vec3(1.0f, 1.0f, -1.0f),	    
+	glm::vec3(-1.0f, 1.0f, -1.0f)	    
+    );
 
     double lastTime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
@@ -112,6 +127,8 @@ int main() {
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+
+	rect.render();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
