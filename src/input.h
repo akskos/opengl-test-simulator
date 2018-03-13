@@ -1,4 +1,5 @@
-#include <GLFW/glfw3.h>
+/*
+#include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <functional>
 #include <map>
@@ -16,3 +17,4 @@ public:
 private:
     std::map<int, std::map<int, std::function<void()>>> callbacks;
 };
+*/

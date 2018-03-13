@@ -1,4 +1,3 @@
 #!/bin/bash
 
-make
-./bin/test
+make && ./bin/test

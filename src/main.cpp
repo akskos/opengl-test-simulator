@@ -1,5 +1,6 @@
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
+//#include <GL3/gl3.h>
+#include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
@@ -15,9 +16,11 @@
 #include "rect.h"
 #include "floor.h"
 
+#define PROGRAM_NAME "Super Tube"
+
 using namespace std;
 
-InputController input;
+//InputController input;
 Camera camera;
 
 const GLfloat speed = 2.0f;
@@ -29,31 +32,39 @@ const GLfloat color_data[] = {
 };
 
 void quit() {
-    glfwTerminate();
+    SDL_Quit();
     exit(0);
 }
-
+/*
 void keyboardCallbackWrapper(GLFWwindow *window, int key, int scancode, int action, int mods) {
     input.keyboardCallback(window, key, scancode, action, mods); 
 }
+*/
 
 int main() {
-    GLFWwindow *window;
-    if (!glfwInit()) {
-	return 1;
-    }
+    SDL_Window* window = NULL;
+    SDL_GLContext context;
 
-    window = glfwCreateWindow(500, 500, "Hello", NULL, NULL);
-    if (!window) {
-	glfwTerminate();
-	return 2;
-    }
+    SDL_Init(SDL_INIT_VIDEO);
 
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(2);
-    glfwSetKeyCallback(window, keyboardCallbackWrapper);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
+    window = SDL_CreateWindow(
+	    PROGRAM_NAME,
+	    SDL_WINDOWPOS_CENTERED,
+	    SDL_WINDOWPOS_CENTERED,
+	    512,
+	    512,
+	    SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+    );
+
+    context = SDL_GL_CreateContext(window);
+
+    SDL_GL_SetSwapInterval(1);
+/*
     input.addBinding(GLFW_KEY_D, GLFW_PRESS, []() {
 	camera.move(glm::vec3(speed, 0.0f, 0.0f));
     });
@@ -79,10 +90,12 @@ int main() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
     input.addBinding(GLFW_KEY_ESCAPE, GLFW_PRESS, quit);
-
+*/
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
-	glfwTerminate();
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 	return 3;
     }
 
@@ -117,14 +130,14 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
-    double lastTime = glfwGetTime();
-    while (!glfwWindowShouldClose(window)) {
+    int loop_status = 1;
+    while (loop_status) {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glUseProgram(programId);
 
-	double time = glfwGetTime();
-	double interval = time - lastTime;
+	double interval = 1;
 
 	camera.update(interval);
 	glm::mat4 mvp = camera.getMVP();
@@ -151,12 +164,27 @@ int main() {
 	rect.render();
 	floor.render();
 
-	glfwSwapBuffers(window);
-	glfwPollEvents();
-
-	lastTime = glfwGetTime();
+	SDL_GL_SwapWindow(window);
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) {
+	    switch (event.type) {
+		case SDL_KEYDOWN:
+		    break;
+		case SDL_KEYUP:
+		    if (event.key.keysym.sym == SDLK_ESCAPE) {
+			loop_status = 0;	
+		    }
+		    break;
+		case SDL_QUIT:
+		    loop_status = 0;
+		    break;
+	    }
+	}
     }
 
-    glfwTerminate();
+    SDL_GL_DeleteContext(context);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
     return 0;
 }

@@ -1,3 +1,4 @@
+/*
 #include "input.h"
 
 void InputController::keyboardCallback(
@@ -18,3 +19,4 @@ void InputController::keyboardCallback(
 void InputController::addBinding(int key, int action, std::function<void()> callback) {
     callbacks[key][action] = callback;
 }
+*/
