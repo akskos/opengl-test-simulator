@@ -1,4 +1,3 @@
-/*
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <functional>
@@ -6,15 +5,9 @@
 
 class InputController {
 public:
-    void keyboardCallback(
-	    GLFWwindow *window,
-	    int key, 
-	    int scancode, 
-	    int action,
-	    int mods);
-    void addBinding(int key, int action, std::function<void()> callback);
+    void keyboardCallback(SDL_Event event);
+    void addBinding(SDL_Keycode, unsigned int action, std::function<void()> callback);
 
 private:
-    std::map<int, std::map<int, std::function<void()>>> callbacks;
+    std::map<SDL_Keycode, std::map<int, std::function<void()>>> callbacks;
 };
-*/

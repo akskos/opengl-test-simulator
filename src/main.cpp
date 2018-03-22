@@ -20,7 +20,7 @@
 
 using namespace std;
 
-//InputController input;
+InputController input;
 Camera camera;
 
 const GLfloat speed = 2.0f;
@@ -35,11 +35,13 @@ void quit() {
     SDL_Quit();
     exit(0);
 }
-/*
-void keyboardCallbackWrapper(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    input.keyboardCallback(window, key, scancode, action, mods); 
+
+void pollEvents() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+	input.keyboardCallback(event);
+    }
 }
-*/
 
 int main() {
     SDL_Window* window = NULL;
@@ -64,6 +66,19 @@ int main() {
     context = SDL_GL_CreateContext(window);
 
     SDL_GL_SetSwapInterval(1);
+
+    input.addBinding(SDLK_ESCAPE, SDL_KEYUP, [=]() {
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+	exit(0);
+    });
+    input.addBinding(SDLK_UNKNOWN, SDL_QUIT, [=]() {
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+	exit(0);
+    });
 /*
     input.addBinding(GLFW_KEY_D, GLFW_PRESS, []() {
 	camera.move(glm::vec3(speed, 0.0f, 0.0f));
@@ -165,21 +180,8 @@ int main() {
 	floor.render();
 
 	SDL_GL_SwapWindow(window);
-	SDL_Event event;
-	while (SDL_PollEvent(&event)) {
-	    switch (event.type) {
-		case SDL_KEYDOWN:
-		    break;
-		case SDL_KEYUP:
-		    if (event.key.keysym.sym == SDLK_ESCAPE) {
-			loop_status = 0;	
-		    }
-		    break;
-		case SDL_QUIT:
-		    loop_status = 0;
-		    break;
-	    }
-	}
+	
+	pollEvents();
     }
 
     SDL_GL_DeleteContext(context);

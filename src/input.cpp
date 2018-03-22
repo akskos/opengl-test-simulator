@@ -1,22 +1,16 @@
-/*
 #include "input.h"
 
-void InputController::keyboardCallback(
-	GLFWwindow *window,
-	int key,
-	int scancode,
-	int action,
-	int mods) {
+void InputController::keyboardCallback(SDL_Event event) {
+    SDL_Keycode key = event.key.keysym.sym;
     if (callbacks.find(key) == callbacks.end()) {
 	return;
     }
-    if (callbacks[key].find(action) == callbacks[key].end()) {
+    if (callbacks[key].find(event.type) == callbacks[key].end()) {
 	return;
     }
-    callbacks[key][action]();
+    callbacks[key][event.type]();
 }
 
-void InputController::addBinding(int key, int action, std::function<void()> callback) {
+void InputController::addBinding(SDL_Keycode key, unsigned int action, std::function<void()> callback) {
     callbacks[key][action] = callback;
 }
-*/
