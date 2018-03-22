@@ -79,33 +79,30 @@ int main() {
 	SDL_Quit();
 	exit(0);
     });
-/*
-    input.addBinding(GLFW_KEY_D, GLFW_PRESS, []() {
+    input.addBinding(SDLK_d, SDL_KEYDOWN, []() {
 	camera.move(glm::vec3(speed, 0.0f, 0.0f));
     });
-    input.addBinding(GLFW_KEY_D, GLFW_RELEASE, []() {
+    input.addBinding(SDLK_d, SDL_KEYUP, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
     });
-    input.addBinding(GLFW_KEY_A, GLFW_PRESS, []() {
+    input.addBinding(SDLK_a, SDL_KEYDOWN, []() {
 	camera.move(glm::vec3(-speed, 0.0f, 0.0f));	    
     });
-    input.addBinding(GLFW_KEY_A, GLFW_RELEASE, []() {
+    input.addBinding(SDLK_a, SDL_KEYUP, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
     });
-    input.addBinding(GLFW_KEY_W, GLFW_PRESS, []() {
+    input.addBinding(SDLK_w, SDL_KEYDOWN, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, -speed));
     });
-    input.addBinding(GLFW_KEY_W, GLFW_RELEASE, []() {
+    input.addBinding(SDLK_w, SDL_KEYUP, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
-    input.addBinding(GLFW_KEY_S, GLFW_PRESS, []() {
+    input.addBinding(SDLK_s, SDL_KEYDOWN, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, speed));
     });
-    input.addBinding(GLFW_KEY_S, GLFW_RELEASE, []() {
+    input.addBinding(SDLK_s, SDL_KEYUP, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
-    input.addBinding(GLFW_KEY_ESCAPE, GLFW_PRESS, quit);
-*/
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
 	SDL_GL_DeleteContext(context);
@@ -144,15 +141,16 @@ int main() {
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-
-    int loop_status = 1;
-    while (loop_status) {
+    unsigned lastTicks = SDL_GetTicks();
+    while (true) {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glUseProgram(programId);
 
-	double interval = 1;
+	unsigned ticks = SDL_GetTicks();
+	double interval = (ticks - lastTicks) / 1000.0;
+	lastTicks = SDL_GetTicks();
 
 	camera.update(interval);
 	glm::mat4 mvp = camera.getMVP();
