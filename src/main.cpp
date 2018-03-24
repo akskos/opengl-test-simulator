@@ -104,10 +104,10 @@ int main() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
     input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
-	camera.rotate(glm::radians(1.0f));
+	camera.rotate(-0.01f);
     });
     input.addBinding(SDLK_RIGHT, SDL_KEYDOWN, []() {
-	camera.rotate(-glm::radians(1.0f));
+	camera.rotate(0.01f);
     });
     input.addBinding(SDLK_LEFT, SDL_KEYUP, []() {
 	camera.rotate(0);

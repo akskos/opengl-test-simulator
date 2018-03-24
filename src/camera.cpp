@@ -36,8 +36,6 @@ void Camera::update(double interval) {
     }
     position += deltaVec1 + deltaVec2;
 
-    double currentAngle = asin(front.x / glm::distance(front, glm::vec3(0, 0, 0)));
-    front.x = sin(currentAngle + frontDelta);
-    front.z = -cos(currentAngle + frontDelta);
-    front = glm::normalize(front);
+    glm::mat4 rotationMat = glm::rotate(glm::mat4(1), (float)frontDelta, glm::vec3(0, 1, 0));
+    front = glm::vec3(rotationMat * glm::vec4(front, 1.0f));
 }
