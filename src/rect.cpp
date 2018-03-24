@@ -1,5 +1,9 @@
 #include "rect.h"
 
+Rect::Rect() {
+
+}
+
 Rect::Rect(
 	glm::vec3 point1,
 	glm::vec3 point2,

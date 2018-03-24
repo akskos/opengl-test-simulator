@@ -7,6 +7,7 @@
 
 class Rect {
 public:
+    Rect();
     Rect(
 	glm::vec3 point1,
 	glm::vec3 poin2,
@@ -17,6 +18,12 @@ public:
     void render();
 
 private:
+    void init(
+	glm::vec3 point1,
+	glm::vec3 poin2,
+	glm::vec3 point3,
+	glm::vec3 point4
+    );
     GLuint vbo;
     GLuint cbo;
 };

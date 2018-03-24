@@ -15,6 +15,7 @@
 #include "camera.h"
 #include "rect.h"
 #include "floor.h"
+#include "wall.h"
 
 #define PROGRAM_NAME "Super Tube"
 
@@ -23,7 +24,7 @@ using namespace std;
 InputController input;
 Camera camera;
 
-const GLfloat speed = 2.0f;
+const GLfloat speed = 4.0f;
 
 const GLfloat color_data[] = {
     0.0f, 0.5f, 1.0f,
@@ -104,10 +105,10 @@ int main() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
     input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
-	camera.rotate(-0.01f);
+	camera.rotate(-0.03f);
     });
     input.addBinding(SDLK_RIGHT, SDL_KEYDOWN, []() {
-	camera.rotate(0.01f);
+	camera.rotate(0.03f);
     });
     input.addBinding(SDLK_LEFT, SDL_KEYUP, []() {
 	camera.rotate(0);
@@ -150,7 +151,43 @@ int main() {
 	glm::vec3(-1.0f, 1.0f, -1.0f)	    
     );
 
+    vector<Rect*> rects;
+    rects.push_back(new Rect(
+	glm::vec3(9, -2, 18),
+	glm::vec3(18, -2, 18),
+	glm::vec3(18, -2, 30),
+	glm::vec3(9, -2, 30)
+    ));
+    rects[0]->setColor(glm::vec3(1.0f, 0.4f, 0.7f));
+    rects.push_back(new Rect(
+	glm::vec3(9, -2, 18),
+	glm::vec3(9, 5, 18),
+	glm::vec3(9, 5, 30),
+	glm::vec3(9, -2, 30)
+    ));
+    rects[1]->setColor(glm::vec3(0.4f, 1.0f, 0.7f));
+    rects.push_back(new Rect(
+	glm::vec3(18, -2, 18),
+	glm::vec3(18, 5, 18),
+	glm::vec3(18, 5, 30),
+	glm::vec3(18, -2, 30)
+    ));
+    rects[2]->setColor(glm::vec3(0.7f, 0.3f, 1.0f));
+    rects.push_back(new Rect(
+	glm::vec3(9, 5, 18),
+	glm::vec3(18, 5, 18),
+	glm::vec3(18, 5, 30),
+	glm::vec3(9, 5, 30)
+    ));
+    rects[3]->setColor(glm::vec3(0.2f, 0.4f, 0.7f));
+
     Floor floor;
+
+    Wall wall(glm::vec3(-15, -2, 15), glm::vec3(10, 0, 7), 1.0f);
+    wall.setColor(glm::vec3(0.1f, 0.9f, 0.7f));
+
+    Wall wall2(glm::vec3(-5, -2, -5), glm::vec3(5, 0, 5), 7.07f);
+    wall2.setColor(glm::vec3(1.0f, 0.3f, 0.4f));
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -189,6 +226,11 @@ int main() {
 
 	rect.render();
 	floor.render();
+	for (int i = 0; i < rects.size(); i++) {
+	    rects[i]->render();
+	}
+	wall.render();
+	wall2.render();
 
 	SDL_GL_SwapWindow(window);
 	
