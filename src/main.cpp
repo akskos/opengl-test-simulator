@@ -106,6 +106,15 @@ int main() {
     input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
 	camera.rotate(glm::radians(1.0f));
     });
+    input.addBinding(SDLK_RIGHT, SDL_KEYDOWN, []() {
+	camera.rotate(-glm::radians(1.0f));
+    });
+    input.addBinding(SDLK_LEFT, SDL_KEYUP, []() {
+	camera.rotate(0);
+    });
+    input.addBinding(SDLK_RIGHT, SDL_KEYUP, []() {
+	camera.rotate(0);
+    });
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {

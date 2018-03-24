@@ -11,12 +11,12 @@ public:
     glm::mat4 getMVP();
     void update(double interval);
     void move(glm::vec3 delta);
-    void rotate(double rad);
+    void rotate(double delta);
 
 private:
     glm::vec3 position;
     glm::vec3 positionDelta;
     glm::vec3 front;
-    glm::vec3 eyesOnDelta;
+    double frontDelta;
     glm::vec3 up;
 };

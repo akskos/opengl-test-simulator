@@ -19,17 +19,29 @@ glm::mat4 Camera::getMVP() {
 
 void Camera::move(glm::vec3 delta) {
     positionDelta = delta;
-    //eyesOnDelta = delta;
 }
 
-void Camera::rotate(double rad) {
-    //eyesOn.x += sin(rad);
-    //eyesOn.z += cos(rad);
+void Camera::rotate(double delta) {
+    frontDelta = -delta;
 }
 
 void Camera::update(double interval) {
-    const glm::vec3 deltaVec1 = front * (float)interval * positionDelta;
-    const glm::vec3 deltaVec2 = glm::normalize(glm::cross(front, up)) * (float)interval * positionDelta;
+    glm::vec3 deltaVec1;
+    if (positionDelta.z != 0) {
+	deltaVec1 = front * (float)interval * positionDelta.z;
+    }
+    glm::vec3 deltaVec2;
+    if (positionDelta.x != 0) {
+	deltaVec2 = glm::normalize(glm::cross(front, up)) * (float)interval * positionDelta.x;
+    }
     position += deltaVec1 + deltaVec2;
-    //eyesOn += eyesOnDelta * (float)interval;
+
+    //glm::vec3 f;
+    //f.x = sin(frontDelta);
+    //f.z = -cos(frontDelta);
+    //front += glm::normalize(f);
+    double currentAngle = asin(front.x / glm::distance(front, glm::vec3(0, 0, 0)));
+    front.x = sin(currentAngle + frontDelta);
+    front.z = -cos(currentAngle + frontDelta);
+    front = glm::normalize(front);
 }
