@@ -58,6 +58,27 @@ Rect::Rect(
     );
 }
 
+void Rect::setColor(glm::vec3 color) {
+    GLfloat color_data[] = {
+	color.x, color.y, color.z,
+	color.x, color.y, color.z,
+	color.x, color.y, color.z,
+	color.x, color.y, color.z,
+	color.x, color.y, color.z,
+	color.x, color.y, color.z
+    };
+    
+    // generate and init color buffer
+    glGenBuffers(1, &cbo);
+    glBindBuffer(GL_ARRAY_BUFFER, cbo);
+    glBufferData(
+	    GL_ARRAY_BUFFER,
+	    sizeof(color_data), 
+	    color_data,
+	    GL_STATIC_DRAW
+    );
+}
+
 void Rect::render() {
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);

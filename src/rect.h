@@ -13,6 +13,7 @@ public:
 	glm::vec3 point3,
 	glm::vec3 point4
     );
+    void setColor(glm::vec3 color);
     void render();
 
 private:
