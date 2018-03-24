@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include <cmath>
 
 class Camera {
 public:
@@ -10,10 +11,12 @@ public:
     glm::mat4 getMVP();
     void update(double interval);
     void move(glm::vec3 delta);
+    void rotate(double rad);
 
 private:
     glm::vec3 position;
     glm::vec3 positionDelta;
-    glm::vec3 eyesOn;
+    glm::vec3 front;
     glm::vec3 eyesOnDelta;
+    glm::vec3 up;
 };

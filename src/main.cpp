@@ -92,17 +92,21 @@ int main() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
     });
     input.addBinding(SDLK_w, SDL_KEYDOWN, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, -speed));
+	camera.move(glm::vec3(0.0f, 0.0f, speed));
     });
     input.addBinding(SDLK_w, SDL_KEYUP, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
     input.addBinding(SDLK_s, SDL_KEYDOWN, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, speed));
+	camera.move(glm::vec3(0.0f, 0.0f, -speed));
     });
     input.addBinding(SDLK_s, SDL_KEYUP, []() {
 	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
     });
+    input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
+	camera.rotate(glm::radians(1.0f));
+    });
+
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
 	SDL_GL_DeleteContext(context);
