@@ -17,7 +17,7 @@
 #include "floor.h"
 #include "wall.h"
 
-#define PROGRAM_NAME "Super Tube"
+#define PROGRAM_NAME "Test Simulator"
 
 using namespace std;
 
