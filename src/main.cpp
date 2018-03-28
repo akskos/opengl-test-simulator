@@ -40,6 +40,10 @@ void quit() {
 void pollEvents() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
+	if (event.type == SDL_MOUSEMOTION) {
+	    double delta = event.motion.xrel / 700.0;
+	    camera.instaRotate(delta);
+	}
 	input.keyboardCallback(event);
     }
 }
@@ -67,6 +71,7 @@ int main() {
     context = SDL_GL_CreateContext(window);
 
     SDL_GL_SetSwapInterval(1);
+    SDL_SetRelativeMouseMode(SDL_TRUE);
 
     input.addBinding(SDLK_ESCAPE, SDL_KEYUP, [=]() {
 	SDL_GL_DeleteContext(context);
