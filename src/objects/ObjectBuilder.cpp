@@ -3,6 +3,17 @@
 namespace object_builder {
   using namespace std;
 
+  namespace {
+    Rect* buildLonelyRect() {
+      return new Rect (
+        glm::vec3(-1.0f, -1.0f, -1.0f),	    
+        glm::vec3(1.0f, -1.0f, -1.0f),	    
+        glm::vec3(1.0f, 1.0f, -1.0f),	    
+        glm::vec3(-1.0f, 1.0f, -1.0f)	    
+      );
+    }
+  }
+
   World* buildWorld() {
     World* world = new World();
     vector<Rect*> tunnel_rects = buildTunnel();
@@ -11,6 +22,8 @@ namespace object_builder {
     world->addObjects(renderables);
     Renderable* floor = new Floor();
     world->addObject(floor);
+    Renderable* lonelyRect = buildLonelyRect();
+    world->addObject(lonelyRect);
     return world;
   }
   

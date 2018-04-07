@@ -169,13 +169,6 @@ int main(const int argc, const char** argv) {
 
     GLuint matrixId = glGetUniformLocation(programId, "mvp");
 
-    Rect rect(
-	glm::vec3(-1.0f, -1.0f, -1.0f),	    
-	glm::vec3(1.0f, -1.0f, -1.0f),	    
-	glm::vec3(1.0f, 1.0f, -1.0f),	    
-	glm::vec3(-1.0f, 1.0f, -1.0f)	    
-    );
-
     World* world = ob::buildWorld();
 
     Wall wall(glm::vec3(-15, -2, 15), glm::vec3(10, 0, 7), 1.0f);
@@ -219,7 +212,6 @@ int main(const int argc, const char** argv) {
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 
-	rect.render();
 	wall.render();
 	wall2.render();
   world->render();
