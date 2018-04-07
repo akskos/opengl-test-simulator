@@ -18,6 +18,7 @@
 #include "objects/floor.h"
 #include "objects/wall.h"
 #include "objects/World.h"
+#include "objects/ObjectBuilder.h"
 #include "EventManager.h"
 #include "options.h"
 #include "config.h"
@@ -25,6 +26,7 @@
 #define PROGRAM_NAME "Test Simulator"
 
 using namespace std;
+namespace ob = object_builder;
 
 InputController input;
 Camera camera;
@@ -175,7 +177,7 @@ int main(const int argc, const char** argv) {
     );
 
     Floor floor;
-    World world;
+    Renderable* world = ob::buildWorld();
 
     Wall wall(glm::vec3(-15, -2, 15), glm::vec3(10, 0, 7), 1.0f);
     wall.setColor(glm::vec3(0.1f, 0.9f, 0.7f));
@@ -222,7 +224,7 @@ int main(const int argc, const char** argv) {
 	floor.render();
 	wall.render();
 	wall2.render();
-  world.render();
+  world->render();
 
 	SDL_GL_SwapWindow(window);
 	

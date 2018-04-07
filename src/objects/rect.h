@@ -16,6 +16,13 @@ public:
     glm::vec3 point3,
     glm::vec3 point4
   );
+  Rect(
+    glm::vec3 point1,
+    glm::vec3 poin2,
+    glm::vec3 point3,
+    glm::vec3 point4,
+    glm::vec3 color
+  );
   void setColor(glm::vec3 color);
   void render();
 

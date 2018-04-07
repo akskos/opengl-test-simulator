@@ -6,10 +6,12 @@
 #include "Renderable.h"
 #include "ObjectBuilder.h"
 
-class World {
+class World: public Renderable {
   public:
     World();
     void render();
+    void addObject(Renderable* object);
+    void addObjects(std::vector<Renderable*> objects);
 
   private:
     std::vector<Renderable*> objects; 

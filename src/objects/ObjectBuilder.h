@@ -4,8 +4,10 @@
 #include <vector>
 
 #include "rect.h"
+#include "World.h"
 
 namespace object_builder {
+  Renderable* buildWorld();
   std::vector<Rect*> buildTunnel();
 }
 

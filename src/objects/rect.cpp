@@ -1,7 +1,16 @@
 #include "rect.h"
 
-Rect::Rect() {
+Rect::Rect() {}
 
+Rect::Rect(
+	glm::vec3 point1,
+	glm::vec3 point2,
+	glm::vec3 point3,
+	glm::vec3 point4,
+  glm::vec3 color) {
+
+  init(point1, point2, point3, point4);  
+  setColor(color);
 }
 
 Rect::Rect(
@@ -9,6 +18,36 @@ Rect::Rect(
 	glm::vec3 point2,
 	glm::vec3 point3,
 	glm::vec3 point4) {
+
+  init(point1, point2, point3, point4);  
+}
+
+void Rect::setColor(glm::vec3 color) {
+    GLfloat color_data[] = {
+	color.x, color.y, color.z,
+	color.x, color.y, color.z,
+	color.x, color.y, color.z,
+	color.x, color.y, color.z,
+	color.x, color.y, color.z,
+	color.x, color.y, color.z
+    };
+    
+    // generate and init color buffer
+    glGenBuffers(1, &cbo);
+    glBindBuffer(GL_ARRAY_BUFFER, cbo);
+    glBufferData(
+	    GL_ARRAY_BUFFER,
+	    sizeof(color_data), 
+	    color_data,
+	    GL_STATIC_DRAW
+    );
+}
+
+void Rect::init(
+    glm::vec3 point1,
+    glm::vec3 point2,
+    glm::vec3 point3,
+    glm::vec3 point4) {
 
     // init vertex data
     GLfloat vertex_data[6 * 3];
@@ -30,7 +69,7 @@ Rect::Rect(
     vertex_data[15] = point4.x;
     vertex_data[16] = point4.y;
     vertex_data[17] = point4.z;
-
+    
     // generate and init vertex buffer
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -49,27 +88,6 @@ Rect::Rect(
 	1.0f, 1.0f, 1.0f,
 	1.0f, 1.0f, 1.0f,
 	1.0f, 1.0f, 1.0f
-    };
-    
-    // generate and init color buffer
-    glGenBuffers(1, &cbo);
-    glBindBuffer(GL_ARRAY_BUFFER, cbo);
-    glBufferData(
-	    GL_ARRAY_BUFFER,
-	    sizeof(color_data), 
-	    color_data,
-	    GL_STATIC_DRAW
-    );
-}
-
-void Rect::setColor(glm::vec3 color) {
-    GLfloat color_data[] = {
-	color.x, color.y, color.z,
-	color.x, color.y, color.z,
-	color.x, color.y, color.z,
-	color.x, color.y, color.z,
-	color.x, color.y, color.z,
-	color.x, color.y, color.z
     };
     
     // generate and init color buffer
