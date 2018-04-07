@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include <boost/program_options.hpp>
 
 #include "program.h"
 #include "shader.h"
@@ -17,10 +18,12 @@
 #include "floor.h"
 #include "wall.h"
 #include "EventManager.h"
+#include "options.h"
 
 #define PROGRAM_NAME "Test Simulator"
 
 using namespace std;
+namespace po = boost::program_options;
 
 InputController input;
 Camera camera;
@@ -56,6 +59,8 @@ void pollEvents() {
 }
 
 int main() {
+    options::initOptions();
+
     SDL_Window* window = NULL;
     SDL_GLContext context;
 
