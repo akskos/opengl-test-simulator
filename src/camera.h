@@ -23,4 +23,7 @@ private:
     glm::vec3 front;
     double frontDelta;
     glm::vec3 up;
+    const float near_clip = 0.1;
+    const float far_clip = 50.0;
+    const float aspect_ratio = 1.0;
 };

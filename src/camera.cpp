@@ -8,7 +8,7 @@ Camera::Camera() {
 
 glm::mat4 Camera::getMVP() {
     const float fov = Config::getFov();
-    glm::mat4 projection = glm::perspective(glm::radians(fov), 1.0f, 0.1f, 50.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(fov), aspect_ratio, near_clip, far_clip);
     glm::mat4 view = glm::lookAt(
       position,
       position + front,
