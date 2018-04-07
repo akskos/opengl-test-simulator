@@ -17,15 +17,14 @@
 #include "objects/rect.h"
 #include "objects/floor.h"
 #include "objects/wall.h"
+#include "objects/World.h"
 #include "EventManager.h"
 #include "options.h"
 #include "config.h"
-#include "objects/ObjectBuilder.h"
 
 #define PROGRAM_NAME "Test Simulator"
 
 using namespace std;
-namespace ob = object_builder;
 
 InputController input;
 Camera camera;
@@ -175,8 +174,8 @@ int main(const int argc, const char** argv) {
 	glm::vec3(-1.0f, 1.0f, -1.0f)	    
     );
 
-    vector<Rect*> tunnel = ob::buildTunnel();
     Floor floor;
+    World world;
 
     Wall wall(glm::vec3(-15, -2, 15), glm::vec3(10, 0, 7), 1.0f);
     wall.setColor(glm::vec3(0.1f, 0.9f, 0.7f));
@@ -221,11 +220,9 @@ int main(const int argc, const char** argv) {
 
 	rect.render();
 	floor.render();
-	for (int i = 0; i < tunnel.size(); i++) {
-	    tunnel[i]->render();
-	}
 	wall.render();
 	wall2.render();
+  world.render();
 
 	SDL_GL_SwapWindow(window);
 	

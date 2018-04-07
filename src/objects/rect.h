@@ -5,7 +5,9 @@
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 
-class Rect {
+#include "Renderable.h"
+
+class Rect: public Renderable {
 public:
   Rect();
   Rect(
