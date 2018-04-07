@@ -14,16 +14,18 @@
 #include "shader.h"
 #include "input.h"
 #include "camera.h"
-#include "rect.h"
-#include "floor.h"
-#include "wall.h"
+#include "objects/rect.h"
+#include "objects/floor.h"
+#include "objects/wall.h"
 #include "EventManager.h"
 #include "options.h"
 #include "config.h"
+#include "objects/ObjectBuilder.h"
 
 #define PROGRAM_NAME "Test Simulator"
 
 using namespace std;
+namespace ob = object_builder;
 
 InputController input;
 Camera camera;
@@ -173,36 +175,7 @@ int main(const int argc, const char** argv) {
 	glm::vec3(-1.0f, 1.0f, -1.0f)	    
     );
 
-    vector<Rect*> rects;
-    rects.push_back(new Rect(
-	glm::vec3(9, -2, 18),
-	glm::vec3(18, -2, 18),
-	glm::vec3(18, -2, 30),
-	glm::vec3(9, -2, 30)
-    ));
-    rects[0]->setColor(glm::vec3(1.0f, 0.4f, 0.7f));
-    rects.push_back(new Rect(
-	glm::vec3(9, -2, 18),
-	glm::vec3(9, 5, 18),
-	glm::vec3(9, 5, 30),
-	glm::vec3(9, -2, 30)
-    ));
-    rects[1]->setColor(glm::vec3(0.4f, 1.0f, 0.7f));
-    rects.push_back(new Rect(
-	glm::vec3(18, -2, 18),
-	glm::vec3(18, 5, 18),
-	glm::vec3(18, 5, 30),
-	glm::vec3(18, -2, 30)
-    ));
-    rects[2]->setColor(glm::vec3(0.7f, 0.3f, 1.0f));
-    rects.push_back(new Rect(
-	glm::vec3(9, 5, 18),
-	glm::vec3(18, 5, 18),
-	glm::vec3(18, 5, 30),
-	glm::vec3(9, 5, 30)
-    ));
-    rects[3]->setColor(glm::vec3(0.2f, 0.4f, 0.7f));
-
+    vector<Rect*> tunnel = ob::buildTunnel();
     Floor floor;
 
     Wall wall(glm::vec3(-15, -2, 15), glm::vec3(10, 0, 7), 1.0f);
@@ -248,8 +221,8 @@ int main(const int argc, const char** argv) {
 
 	rect.render();
 	floor.render();
-	for (int i = 0; i < rects.size(); i++) {
-	    rects[i]->render();
+	for (int i = 0; i < tunnel.size(); i++) {
+	    tunnel[i]->render();
 	}
 	wall.render();
 	wall2.render();
