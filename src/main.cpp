@@ -23,7 +23,6 @@
 #define PROGRAM_NAME "Test Simulator"
 
 using namespace std;
-namespace po = boost::program_options;
 
 InputController input;
 Camera camera;
@@ -58,8 +57,8 @@ void pollEvents() {
     }
 }
 
-int main() {
-    options::initOptions();
+int main(const int argc, const char** argv) {
+    options::parseOptions(argc, argv);
 
     SDL_Window* window = NULL;
     SDL_GLContext context;
