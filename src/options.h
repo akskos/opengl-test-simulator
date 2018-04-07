@@ -2,10 +2,14 @@
 #define _OPTIONS_H
 
 #include <iostream>
+#include <boost/program_options.hpp>
 
 namespace options {
+  using namespace std;
+  namespace po = boost::program_options;
+
   void initOptions() {
-    std::cout << "initializing options" << std::endl;
+    cout << "initializing options" << endl;
   }
 }
 
