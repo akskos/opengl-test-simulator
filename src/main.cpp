@@ -19,6 +19,7 @@
 #include "wall.h"
 #include "EventManager.h"
 #include "options.h"
+#include "config.h"
 
 #define PROGRAM_NAME "Test Simulator"
 
@@ -58,6 +59,7 @@ void pollEvents() {
 }
 
 int main(const int argc, const char** argv) {
+    Config::initWithDefaults();
     options::parseOptions(argc, argv);
 
     SDL_Window* window = NULL;
@@ -74,8 +76,8 @@ int main(const int argc, const char** argv) {
 	    PROGRAM_NAME,
 	    SDL_WINDOWPOS_CENTERED,
 	    SDL_WINDOWPOS_CENTERED,
-	    512,
-	    512,
+	    Config::getWindowSize(),
+	    Config::getWindowSize(),
 	    SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
     );
 

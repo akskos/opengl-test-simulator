@@ -4,6 +4,8 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 
+#include "config.h"
+
 namespace options {
   using namespace std;
 
@@ -34,7 +36,8 @@ namespace options {
       cout << produceDescription() << endl;
     }
     if (vm.count("size")) {
-      cout << "setting size: " << vm["size"].as<int>() << endl;
+      int size = vm["size"].as<int>();
+      Config::setWindowSize(size);
     }
   }
 }
