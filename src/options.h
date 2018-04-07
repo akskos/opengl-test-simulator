@@ -6,9 +6,10 @@
 
 namespace options {
   using namespace std;
-  namespace po = boost::program_options;
 
   namespace {
+    namespace po = boost::program_options;
+
     po::options_description produceDescription() {
       po::options_description desc("Allowed options");
       desc.add_options()
