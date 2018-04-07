@@ -10,13 +10,13 @@
 
 class Wall {
 public:
-    Wall(glm::vec3 position, glm::vec3 wallVector, float thickness);
-    void render();
-    void setColor(glm::vec3 color);
+  Wall(glm::vec3 position, glm::vec3 wallVector, float thickness);
+  void render();
+  void setColor(glm::vec3 color);
 
 private:
-    std::vector<Rect*> rects;
-    double thickness;
+  std::vector<Rect*> rects;
+  double thickness;
 };
 
 #endif
