@@ -12,7 +12,8 @@ public:
     void update(double interval);
     void move(glm::vec3 delta);
     void rotate(double delta);
-    void instaRotate(double delta);
+    void instaHorizRotate(double delta);
+    void instaVertiRotate(double delta);
 
 private:
     glm::vec3 position;

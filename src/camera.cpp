@@ -25,8 +25,14 @@ void Camera::rotate(double delta) {
     frontDelta = -delta;
 }
 
-void Camera::instaRotate(double delta) {
+void Camera::instaHorizRotate(double delta) {
     glm::mat4 rotationMat = glm::rotate(glm::mat4(1), (float)-delta, glm::vec3(0, 1, 0));
+    front = glm::vec3(rotationMat * glm::vec4(front, 1.0f));
+}
+
+void Camera::instaVertiRotate(double delta) {
+    glm::vec3 rotationAxis = glm::cross(front, up);
+    glm::mat4 rotationMat = glm::rotate(glm::mat4(1), (float)-delta, rotationAxis);
     front = glm::vec3(rotationMat * glm::vec4(front, 1.0f));
 }
 

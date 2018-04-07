@@ -16,6 +16,7 @@
 #include "rect.h"
 #include "floor.h"
 #include "wall.h"
+#include "EventManager.h"
 
 #define PROGRAM_NAME "Test Simulator"
 
@@ -23,6 +24,7 @@ using namespace std;
 
 InputController input;
 Camera camera;
+EventManager em;
 
 const GLfloat speed = 4.0f;
 
@@ -40,11 +42,16 @@ void quit() {
 void pollEvents() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-	if (event.type == SDL_MOUSEMOTION) {
-	    double delta = event.motion.xrel / 700.0;
-	    camera.instaRotate(delta);
-	}
-	input.keyboardCallback(event);
+        if (event.type == SDL_MOUSEMOTION) {
+            double hdelta = event.motion.xrel / 700.0;
+            double vdelta = event.motion.yrel / 700.0;
+            camera.instaHorizRotate(hdelta);
+	    camera.instaVertiRotate(vdelta);
+        }
+        input.keyboardCallback(event);
+        if (event.type == SDL_MOUSEBUTTONDOWN) {
+            em.executeEvent("test");
+        }
     }
 }
 
@@ -120,6 +127,10 @@ int main() {
     });
     input.addBinding(SDLK_RIGHT, SDL_KEYUP, []() {
 	camera.rotate(0);
+    });
+
+    em.addEvent("test", []() {
+        cout << "test event" << endl;
     });
 
     glewExperimental = GL_TRUE;
