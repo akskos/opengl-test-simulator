@@ -5,9 +5,12 @@
 
 #include "rect.h"
 #include "World.h"
+#include "floor.h"
+
+class World;
 
 namespace object_builder {
-  Renderable* buildWorld();
+  World* buildWorld();
   std::vector<Rect*> buildTunnel();
 }
 

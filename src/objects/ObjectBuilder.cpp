@@ -3,12 +3,14 @@
 namespace object_builder {
   using namespace std;
 
-  Renderable* buildWorld() {
+  World* buildWorld() {
     World* world = new World();
     vector<Rect*> tunnel_rects = buildTunnel();
     vector<Renderable*> renderables(tunnel_rects.size());
     copy(tunnel_rects.begin(), tunnel_rects.end(), renderables.begin());
     world->addObjects(renderables);
+    Renderable* floor = new Floor();
+    world->addObject(floor);
     return world;
   }
   

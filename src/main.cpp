@@ -176,8 +176,7 @@ int main(const int argc, const char** argv) {
 	glm::vec3(-1.0f, 1.0f, -1.0f)	    
     );
 
-    Floor floor;
-    Renderable* world = ob::buildWorld();
+    World* world = ob::buildWorld();
 
     Wall wall(glm::vec3(-15, -2, 15), glm::vec3(10, 0, 7), 1.0f);
     wall.setColor(glm::vec3(0.1f, 0.9f, 0.7f));
@@ -221,7 +220,6 @@ int main(const int argc, const char** argv) {
 	glDisableVertexAttribArray(1);
 
 	rect.render();
-	floor.render();
 	wall.render();
 	wall2.render();
   world->render();
