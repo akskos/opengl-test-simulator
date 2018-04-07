@@ -17,6 +17,7 @@ namespace options {
       desc.add_options()
          ("help", "produce help message")
          ("size", po::value<int>(), "set window size in pixels")
+         ("fov", po::value<float>(), "set field of view in degrees")
       ;
       return desc;
     } 
@@ -38,6 +39,10 @@ namespace options {
     if (vm.count("size")) {
       int size = vm["size"].as<int>();
       Config::setWindowSize(size);
+    }
+    if (vm.count("fov")) {
+      float fov = vm["fov"].as<float>();
+      Config::setFov(fov);
     }
   }
 }

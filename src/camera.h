@@ -5,6 +5,8 @@
 #include <glm/gtx/transform.hpp>
 #include <cmath>
 
+#include "config.h"
+
 class Camera {
 public:
     Camera();
