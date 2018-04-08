@@ -1,8 +1,8 @@
 #include "camera.h"
 
 Camera::Camera() {
-    position = glm::vec3(9.0f, 0.0f, 10.0f);
-    front = glm::vec3(0.0f, 0.0f, 1.0f);
+    position = glm::vec3(0.0f, 0.0f, 10.0f);
+    front = glm::vec3(0.0f, 0.0f, -1.0f);
     up = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
