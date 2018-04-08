@@ -1,5 +1,7 @@
 #include "camera.h"
 
+using namespace std;
+
 Camera::Camera() {
     position = glm::vec3(0.0f, 0.0f, 10.0f);
     front = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -18,8 +20,12 @@ glm::mat4 Camera::getMVP() {
     return projection * view * model;
 }
 
-void Camera::move(glm::vec3 delta) {
-    positionDelta = delta;
+void Camera::setXMoveVector(glm::vec3 vec) {
+  xMoveVector = vec; 
+}
+
+void Camera::setZMoveVector(glm::vec3 vec) {
+  zMoveVector = vec;
 }
 
 void Camera::rotate(double delta) {
@@ -44,22 +50,27 @@ void Camera::instaVertiRotate(double delta) {
     }
 }
 
+void Camera::move(glm::vec3 vec, double interval) {
+  glm::vec3 deltaVec1;
+  glm::vec3 movingFront = glm::normalize(glm::vec3(front.x, 0, front.z));
+  if (vec.z != 0) {
+    deltaVec1 = movingFront * (float)interval * vec.z;
+  }
+  glm::vec3 deltaVec2;
+  if (vec.x != 0) {
+    deltaVec2 = glm::normalize(glm::cross(front, up)) * (float)interval * vec.x;
+  }
+  position += deltaVec1 + deltaVec2;
+}
+
 void Camera::update(double interval) {
-    glm::vec3 deltaVec1;
-    glm::vec3 movingFront = glm::normalize(glm::vec3(front.x, 0, front.z));
-    if (positionDelta.z != 0) {
-      deltaVec1 = movingFront * (float)interval * positionDelta.z;
-    }
-    glm::vec3 deltaVec2;
-    if (positionDelta.x != 0) {
-      deltaVec2 = glm::normalize(glm::cross(front, up)) * (float)interval * positionDelta.x;
-    }
-    position += deltaVec1 + deltaVec2;
+  move(xMoveVector, interval);
+  move(zMoveVector, interval);
 
-    glm::mat4 rotationMat = glm::rotate(glm::mat4(1), (float)frontDelta, glm::vec3(0, 1, 0));
-    front = glm::vec3(rotationMat * glm::vec4(front, 1.0f));
+  glm::mat4 rotationMat = glm::rotate(glm::mat4(1), (float)frontDelta, glm::vec3(0, 1, 0));
+  front = glm::vec3(rotationMat * glm::vec4(front, 1.0f));
 
-    glm::vec3 rotationAxis = glm::cross(front, up);
-    glm::mat4 vRotationMat = glm::rotate(glm::mat4(1), (float)vrotateDelta, rotationAxis);
-    front = glm::vec3(vRotationMat * glm::vec4(front, 1.0));
+  glm::vec3 rotationAxis = glm::cross(front, up);
+  glm::mat4 vRotationMat = glm::rotate(glm::mat4(1), (float)vrotateDelta, rotationAxis);
+  front = glm::vec3(vRotationMat * glm::vec4(front, 1.0));
 }

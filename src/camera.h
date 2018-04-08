@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include <cmath>
+#include <iostream>
 
 #include "config.h"
 
@@ -12,13 +13,16 @@ public:
     Camera();
     glm::mat4 getMVP();
     void update(double interval);
-    void move(glm::vec3 delta);
+    void setXMoveVector(glm::vec3 vec);
+    void setZMoveVector(glm::vec3 vec);
     void rotate(double delta);
     void vrotate(double delta);
     void instaHorizRotate(double delta);
     void instaVertiRotate(double delta);
 
 private:
+    glm::vec3 xMoveVector;
+    glm::vec3 zMoveVector;
     glm::vec3 position;
     glm::vec3 positionDelta;
     glm::vec3 front;
@@ -28,4 +32,6 @@ private:
     const float near_clip = 0.1;
     const float far_clip = 50.0;
     const float aspect_ratio = 1.0;
+
+    void move(glm::vec3 vec, double interval);
 };

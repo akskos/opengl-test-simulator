@@ -102,28 +102,28 @@ int main(const int argc, const char** argv) {
 	exit(0);
     });
     input.addBinding(SDLK_d, SDL_KEYDOWN, []() {
-	camera.move(glm::vec3(speed, 0.0f, 0.0f));
+      camera.setXMoveVector(glm::vec3(speed, 0, 0));
     });
     input.addBinding(SDLK_d, SDL_KEYUP, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
+      camera.setXMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_a, SDL_KEYDOWN, []() {
-	camera.move(glm::vec3(-speed, 0.0f, 0.0f));	    
+      camera.setXMoveVector(glm::vec3(-speed, 0, 0));
     });
     input.addBinding(SDLK_a, SDL_KEYUP, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));	    
+      camera.setXMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_w, SDL_KEYDOWN, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, speed));
+      camera.setZMoveVector(glm::vec3(0, 0, speed));
     });
     input.addBinding(SDLK_w, SDL_KEYUP, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
+      camera.setZMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_s, SDL_KEYDOWN, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, -speed));
+      camera.setZMoveVector(glm::vec3(0, 0, -speed));
     });
     input.addBinding(SDLK_s, SDL_KEYUP, []() {
-	camera.move(glm::vec3(0.0f, 0.0f, 0.0f));
+      camera.setZMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
 	camera.rotate(-0.03f);
