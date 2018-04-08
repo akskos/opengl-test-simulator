@@ -137,6 +137,18 @@ int main(const int argc, const char** argv) {
     input.addBinding(SDLK_RIGHT, SDL_KEYUP, []() {
 	camera.rotate(0);
     });
+    input.addBinding(SDLK_UP, SDL_KEYDOWN, []() {
+	camera.vrotate(-0.03f);
+    });
+    input.addBinding(SDLK_DOWN, SDL_KEYDOWN, []() {
+	camera.vrotate(0.03f);
+    });
+    input.addBinding(SDLK_UP, SDL_KEYUP, []() {
+	camera.vrotate(0);
+    });
+    input.addBinding(SDLK_DOWN, SDL_KEYUP, []() {
+	camera.vrotate(0);
+    });
 
     em.addEvent("test", []() {
         cout << "test event" << endl;

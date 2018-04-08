@@ -14,6 +14,7 @@ public:
     void update(double interval);
     void move(glm::vec3 delta);
     void rotate(double delta);
+    void vrotate(double delta);
     void instaHorizRotate(double delta);
     void instaVertiRotate(double delta);
 
@@ -22,6 +23,7 @@ private:
     glm::vec3 positionDelta;
     glm::vec3 front;
     double frontDelta;
+    double vrotateDelta;
     glm::vec3 up;
     const float near_clip = 0.1;
     const float far_clip = 50.0;
