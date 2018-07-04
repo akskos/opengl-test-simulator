@@ -25,9 +25,6 @@ public:
     Builder& setTitle(std::string title);
     Builder& setSize(int size);
 
-    //static const constexpr string defaultTitle = "title";
-    //static const constexpr int defaultSize = 512;
-
 private:
     std::string title;
     int size;
