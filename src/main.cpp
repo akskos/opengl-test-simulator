@@ -66,10 +66,10 @@ int main(const int argc, const char** argv) {
     Config::initWithDefaults();
     options::parseOptions(argc, argv);
 
-    Window window = Window::Builder()
-                        .setTitle(PROGRAM_NAME)
-                        .setSize(Config::getWindowSize())
-                        .build();
+    Window::Builder windowBuilder = Window::Builder();
+    windowBuilder.setTitle(PROGRAM_NAME);
+    windowBuilder.setSize(Config::getWindowSize());
+    Window window = windowBuilder.build();
 
     SDL_GL_SetSwapInterval(1);
     SDL_SetRelativeMouseMode(SDL_TRUE);
