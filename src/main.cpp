@@ -22,6 +22,7 @@
 #include "EventManager.h"
 #include "options.h"
 #include "config.h"
+#include "Window.h"
 
 #define PROGRAM_NAME "Test Simulator"
 
@@ -65,41 +66,21 @@ int main(const int argc, const char** argv) {
     Config::initWithDefaults();
     options::parseOptions(argc, argv);
 
-    SDL_Window* window = NULL;
-    SDL_GLContext context;
-
-    SDL_Init(SDL_INIT_VIDEO);
-
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-
-    window = SDL_CreateWindow(
-	    PROGRAM_NAME,
-	    SDL_WINDOWPOS_CENTERED,
-	    SDL_WINDOWPOS_CENTERED,
-	    Config::getWindowSize(),
-	    Config::getWindowSize(),
-	    SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
-    );
-
-    context = SDL_GL_CreateContext(window);
+    Window window = Window::Builder()
+                        .setTitle(PROGRAM_NAME)
+                        .setSize(Config::getWindowSize())
+                        .build();
 
     SDL_GL_SetSwapInterval(1);
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
-    input.addBinding(SDLK_ESCAPE, SDL_KEYUP, [=]() {
-	SDL_GL_DeleteContext(context);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
-	exit(0);
+    input.addBinding(SDLK_ESCAPE, SDL_KEYUP, [&]() {
+        window.close();
+	    exit(0);
     });
-    input.addBinding(SDLK_UNKNOWN, SDL_QUIT, [=]() {
-	SDL_GL_DeleteContext(context);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
-	exit(0);
+    input.addBinding(SDLK_UNKNOWN, SDL_QUIT, [&]() {
+        window.close();
+	    exit(0);
     });
     input.addBinding(SDLK_d, SDL_KEYDOWN, []() {
       camera.setXMoveVector(glm::vec3(speed, 0, 0));
@@ -156,9 +137,7 @@ int main(const int argc, const char** argv) {
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
-	SDL_GL_DeleteContext(context);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	window.close();
 	return 3;
     }
 
@@ -228,14 +207,11 @@ int main(const int argc, const char** argv) {
 	wall2.render();
   world->render();
 
-	SDL_GL_SwapWindow(window);
+	window.render();
 	
 	pollEvents();
     }
 
-    SDL_GL_DeleteContext(context);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-
+    window.close();
     return 0;
 }
