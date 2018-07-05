@@ -23,6 +23,7 @@
 #include "options.h"
 #include "config.h"
 #include "Window.h"
+#include "Graphics.h"
 
 #define PROGRAM_NAME "Test Simulator"
 
@@ -70,6 +71,8 @@ int main(const int argc, const char** argv) {
     windowBuilder.setTitle(PROGRAM_NAME);
     windowBuilder.setSize(Config::getWindowSize());
     Window window = windowBuilder.build();
+
+    Graphics graphics;
 
     SDL_GL_SetSwapInterval(1);
     SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -135,10 +138,9 @@ int main(const int argc, const char** argv) {
         cout << "test event" << endl;
     });
 
-    glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK) {
+    if (!graphics.init()) {
         window.close();
-        return 3;
+        return 1;
     }
 
     GLuint vao;
@@ -157,6 +159,7 @@ int main(const int argc, const char** argv) {
     Shader fragmentShader(GL_FRAGMENT_SHADER, "src/fragment.shader");
     Program program(vertexShader.getShaderId(), fragmentShader.getShaderId());
     GLuint programId = program.getProgramId();
+    glUseProgram(programId);
 
     GLuint matrixId = glGetUniformLocation(programId, "mvp");
 
@@ -173,9 +176,7 @@ int main(const int argc, const char** argv) {
     unsigned lastTicks = SDL_GetTicks();
     while (true) {
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glUseProgram(programId);
+        graphics.clear();
 
         unsigned ticks = SDL_GetTicks();
         double interval = (ticks - lastTicks) / 1000.0;
