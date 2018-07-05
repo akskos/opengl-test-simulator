@@ -83,52 +83,52 @@ int main(const int argc, const char** argv) {
 	    exit(0);
     });
     input.addBinding(SDLK_d, SDL_KEYDOWN, []() {
-      camera.setXMoveVector(glm::vec3(speed, 0, 0));
+        camera.setXMoveVector(glm::vec3(speed, 0, 0));
     });
     input.addBinding(SDLK_d, SDL_KEYUP, []() {
-      camera.setXMoveVector(glm::vec3(0, 0, 0));
+        camera.setXMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_a, SDL_KEYDOWN, []() {
-      camera.setXMoveVector(glm::vec3(-speed, 0, 0));
+        camera.setXMoveVector(glm::vec3(-speed, 0, 0));
     });
     input.addBinding(SDLK_a, SDL_KEYUP, []() {
-      camera.setXMoveVector(glm::vec3(0, 0, 0));
+        camera.setXMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_w, SDL_KEYDOWN, []() {
-      camera.setZMoveVector(glm::vec3(0, 0, speed));
+        camera.setZMoveVector(glm::vec3(0, 0, speed));
     });
     input.addBinding(SDLK_w, SDL_KEYUP, []() {
-      camera.setZMoveVector(glm::vec3(0, 0, 0));
+        camera.setZMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_s, SDL_KEYDOWN, []() {
-      camera.setZMoveVector(glm::vec3(0, 0, -speed));
+        camera.setZMoveVector(glm::vec3(0, 0, -speed));
     });
     input.addBinding(SDLK_s, SDL_KEYUP, []() {
-      camera.setZMoveVector(glm::vec3(0, 0, 0));
+        camera.setZMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
-	camera.rotate(-0.03f);
+	    camera.rotate(-0.03f);
     });
     input.addBinding(SDLK_RIGHT, SDL_KEYDOWN, []() {
-	camera.rotate(0.03f);
+	    camera.rotate(0.03f);
     });
     input.addBinding(SDLK_LEFT, SDL_KEYUP, []() {
-	camera.rotate(0);
+	    camera.rotate(0);
     });
     input.addBinding(SDLK_RIGHT, SDL_KEYUP, []() {
-	camera.rotate(0);
+	    camera.rotate(0);
     });
     input.addBinding(SDLK_UP, SDL_KEYDOWN, []() {
-	camera.vrotate(-0.03f);
+	    camera.vrotate(-0.03f);
     });
     input.addBinding(SDLK_DOWN, SDL_KEYDOWN, []() {
-	camera.vrotate(0.03f);
+	    camera.vrotate(0.03f);
     });
     input.addBinding(SDLK_UP, SDL_KEYUP, []() {
-	camera.vrotate(0);
+	    camera.vrotate(0);
     });
     input.addBinding(SDLK_DOWN, SDL_KEYUP, []() {
-	camera.vrotate(0);
+	    camera.vrotate(0);
     });
 
     em.addEvent("test", []() {
@@ -137,8 +137,8 @@ int main(const int argc, const char** argv) {
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
-	window.close();
-	return 3;
+        window.close();
+        return 3;
     }
 
     GLuint vao;
@@ -173,43 +173,43 @@ int main(const int argc, const char** argv) {
     unsigned lastTicks = SDL_GetTicks();
     while (true) {
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(programId);
+        glUseProgram(programId);
 
-	unsigned ticks = SDL_GetTicks();
-	double interval = (ticks - lastTicks) / 1000.0;
-	lastTicks = SDL_GetTicks();
+        unsigned ticks = SDL_GetTicks();
+        double interval = (ticks - lastTicks) / 1000.0;
+        lastTicks = SDL_GetTicks();
 
-	camera.update(interval);
-	glm::mat4 mvp = camera.getMVP();
-	glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
+        camera.update(interval);
+        glm::mat4 mvp = camera.getMVP();
+        glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
 
-	const GLfloat vertex_data[] = {
-	    -1.0f, -1.0f, 0.0f,
-	     1.0f, -1.0f, 0.0f,
-	     0.0f,  1.0f, 0.0f
-	};
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data), vertex_data, GL_STATIC_DRAW);
+        const GLfloat vertex_data[] = {
+            -1.0f, -1.0f, 0.0f,
+            1.0f, -1.0f, 0.0f,
+            0.0f,  1.0f, 0.0f
+        };
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data), vertex_data, GL_STATIC_DRAW);
 
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, cbo);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, cbo);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(1);
 
-	wall.render();
-	wall2.render();
-  world->render();
+        wall.render();
+        wall2.render();
+        world->render();
 
-	window.render();
-	
-	pollEvents();
+        window.render();
+        
+        pollEvents();
     }
 
     window.close();
