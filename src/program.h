@@ -1,3 +1,6 @@
+#ifndef _PROGRAM_H
+#define _PROGRAM_H
+
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <iostream>
@@ -13,3 +16,5 @@ private:
     void check();
     void detach();
 };
+
+#endif

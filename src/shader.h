@@ -1,3 +1,6 @@
+#ifndef _SHADER_H
+#define _SHADER_H
+
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <iostream>
@@ -21,3 +24,5 @@ private:
     void compile(std::string source);
     void check();
 };
+
+#endif
