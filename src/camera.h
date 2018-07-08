@@ -7,18 +7,24 @@
 #include <iostream>
 
 #include "config.h"
+#include "actors/Actor.h"
+#include "Graphics.h"
+#include "events/Event.h"
 
-class Camera {
+class Camera: public Actor {
 public:
     Camera();
     glm::mat4 getMVP();
-    void update(double interval);
     void setXMoveVector(glm::vec3 vec);
     void setZMoveVector(glm::vec3 vec);
     void rotate(double delta);
     void vrotate(double delta);
     void instaHorizRotate(double delta);
     void instaVertiRotate(double delta);
+
+    void update(double interval);
+    void render(Graphics graphics);
+    void handleEvent(Event event);
 
 private:
     glm::vec3 xMoveVector;

@@ -74,3 +74,11 @@ void Camera::update(double interval) {
   glm::mat4 vRotationMat = glm::rotate(glm::mat4(1), (float)vrotateDelta, rotationAxis);
   front = glm::vec3(vRotationMat * glm::vec4(front, 1.0));
 }
+
+void Camera::render(Graphics graphics) {
+  graphics.updateMVP(getMVP());
+}
+
+void Camera::handleEvent(Event event) {
+  // asdf
+}
