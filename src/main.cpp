@@ -67,7 +67,7 @@ int main(const int argc, const char** argv) {
     Config::initWithDefaults();
     options::parseOptions(argc, argv);
 
-    Window::Builder windowBuilder = Window::Builder();
+    Window::Builder windowBuilder;
     windowBuilder.setTitle(PROGRAM_NAME);
     windowBuilder.setSize(Config::getWindowSize());
     Window window = windowBuilder.build();
