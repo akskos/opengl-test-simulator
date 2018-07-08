@@ -139,6 +139,7 @@ int main(const int argc, const char** argv) {
     });
 
     if (!graphics.init()) {
+        cout << "Failed to init graphics" << endl;
         window.close();
         return 1;
     }
@@ -154,14 +155,6 @@ int main(const int argc, const char** argv) {
     glGenBuffers(1, &cbo);
     glBindBuffer(GL_ARRAY_BUFFER, cbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(color_data), color_data, GL_STATIC_DRAW);
-
-    Shader vertexShader(GL_VERTEX_SHADER, "src/vertex.shader");
-    Shader fragmentShader(GL_FRAGMENT_SHADER, "src/fragment.shader");
-    Program program(vertexShader.getShaderId(), fragmentShader.getShaderId());
-    GLuint programId = program.getProgramId();
-    glUseProgram(programId);
-
-    GLuint matrixId = glGetUniformLocation(programId, "mvp");
 
     World* world = ob::buildWorld();
 
@@ -183,8 +176,7 @@ int main(const int argc, const char** argv) {
         lastTicks = SDL_GetTicks();
 
         camera.update(interval);
-        glm::mat4 mvp = camera.getMVP();
-        glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
+        camera.render(graphics);
 
         const GLfloat vertex_data[] = {
             -1.0f, -1.0f, 0.0f,
