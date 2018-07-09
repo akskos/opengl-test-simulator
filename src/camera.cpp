@@ -1,6 +1,7 @@
 #include "camera.h"
 
 using namespace std;
+typedef Util::Direction Direction;
 
 Camera::Camera() {
     position = glm::vec3(0.0f, 0.0f, 10.0f);
@@ -75,10 +76,49 @@ void Camera::update(double interval) {
   front = glm::vec3(vRotationMat * glm::vec4(front, 1.0));
 }
 
-void Camera::render(Graphics graphics) {
-  graphics.updateMVP(getMVP());
+void Camera::setMovingDirection(Direction direction) {
+  switch (direction) {
+  case Direction::LEFT:
+    setXMoveVector(glm::vec3(-4, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, 0));
+    break;
+  case Direction::RIGHT:
+    setXMoveVector(glm::vec3(4, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, 0));
+    break;
+  case Direction::FORWARD:
+    setXMoveVector(glm::vec3(0, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, 4));
+    break;
+  case Direction::BACK:
+    setXMoveVector(glm::vec3(0, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, -4));
+    break;
+  case Direction::STOP:
+    setXMoveVector(glm::vec3(0, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, 0));
+    break;
+  case Direction::LEFT_DIAGONAL_FORWARD:
+    setXMoveVector(glm::vec3(-4, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, 4));
+    break;
+  case Direction::LEFT_DIAGONAL_BACKWARD:
+    setXMoveVector(glm::vec3(-4, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, -4));
+    break;
+  case Direction::RIGHT_DIAGONAL_FORWARD:
+    setXMoveVector(glm::vec3(4, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, 4));
+    break;
+  case Direction::RIGHT_DIAGONAL_BACKWARD:
+    setXMoveVector(glm::vec3(4, 0, 0));
+    setZMoveVector(glm::vec3(0, 0, -4));
+    break;
+  default:
+    break;
+  }
 }
 
-void Camera::handleEvent(Event event) {
-  // asdf
+void Camera::render(Graphics graphics) {
+  graphics.updateMVP(getMVP());
 }

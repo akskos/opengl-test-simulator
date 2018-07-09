@@ -38,8 +38,8 @@ void Wall::setColor(glm::vec3 color) {
   }
 }
 
-void Wall::render() {
+void Wall::render(Graphics graphics) {
   for (int i = 0; i < rects.size(); i++) {
-    rects[i]->render();
+    rects[i]->render(graphics);
   }
 }

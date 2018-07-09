@@ -19,8 +19,12 @@ Floor::Floor() {
     }
 }
 
-void Floor::render() {
+void Floor::render(Graphics graphics) {
     for (Rect *r : rects) {
-	r->render();
+	r->render(graphics);
     }
+}
+
+void Floor::update(double interval) {
+
 }

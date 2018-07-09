@@ -7,11 +7,13 @@
 
 #include "rect.h"
 #include "Renderable.h"
+#include "../Graphics.h"
 
 class Floor : public Renderable {
 public:
     Floor();
-    void render();
+    void render(Graphics graphics);
+    void update(double interval);
 
 private:
     std::vector<Rect *> rects;

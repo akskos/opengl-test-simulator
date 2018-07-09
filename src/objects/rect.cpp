@@ -101,7 +101,7 @@ void Rect::init(
     );
 }
 
-void Rect::render() {
+void Rect::render(Graphics graphics) {
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, cbo);
@@ -111,4 +111,8 @@ void Rect::render() {
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
+}
+
+void Rect::update(double interval) {
+    
 }

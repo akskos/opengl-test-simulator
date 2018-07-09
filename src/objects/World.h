@@ -5,11 +5,13 @@
 
 #include "Renderable.h"
 #include "ObjectBuilder.h"
+#include "../Graphics.h"
 
 class World: public Renderable {
   public:
     World();
-    void render();
+    void render(Graphics graphics);
+    void update(double interval);
     void addObject(Renderable* object);
     void addObjects(std::vector<Renderable*> objects);
 

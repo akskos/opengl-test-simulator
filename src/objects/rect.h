@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include "Renderable.h"
+#include "../Graphics.h"
 
 class Rect: public Renderable {
 public:
@@ -24,7 +25,8 @@ public:
     glm::vec3 color
   );
   void setColor(glm::vec3 color);
-  void render();
+  void render(Graphics graphics);
+  void update(double interval);
 
 private:
   void init(

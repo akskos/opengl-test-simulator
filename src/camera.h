@@ -9,7 +9,8 @@
 #include "config.h"
 #include "actors/Actor.h"
 #include "Graphics.h"
-#include "events/Event.h"
+#include "commands/MoveCommand.h"
+#include "Util.h"
 
 class Camera: public Actor {
 public:
@@ -24,7 +25,7 @@ public:
 
     void update(double interval);
     void render(Graphics graphics);
-    void handleEvent(Event event);
+    void setMovingDirection(Util::Direction direction);
 
 private:
     glm::vec3 xMoveVector;

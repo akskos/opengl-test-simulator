@@ -24,6 +24,8 @@
 #include "config.h"
 #include "Window.h"
 #include "Graphics.h"
+#include "commands/Command.h"
+#include "actors/Actor.h"
 
 #define PROGRAM_NAME "Test Simulator"
 
@@ -84,30 +86,6 @@ int main(const int argc, const char** argv) {
     input.addBinding(SDLK_UNKNOWN, SDL_QUIT, [&]() {
         window.close();
 	    exit(0);
-    });
-    input.addBinding(SDLK_d, SDL_KEYDOWN, []() {
-        camera.setXMoveVector(glm::vec3(speed, 0, 0));
-    });
-    input.addBinding(SDLK_d, SDL_KEYUP, []() {
-        camera.setXMoveVector(glm::vec3(0, 0, 0));
-    });
-    input.addBinding(SDLK_a, SDL_KEYDOWN, []() {
-        camera.setXMoveVector(glm::vec3(-speed, 0, 0));
-    });
-    input.addBinding(SDLK_a, SDL_KEYUP, []() {
-        camera.setXMoveVector(glm::vec3(0, 0, 0));
-    });
-    input.addBinding(SDLK_w, SDL_KEYDOWN, []() {
-        camera.setZMoveVector(glm::vec3(0, 0, speed));
-    });
-    input.addBinding(SDLK_w, SDL_KEYUP, []() {
-        camera.setZMoveVector(glm::vec3(0, 0, 0));
-    });
-    input.addBinding(SDLK_s, SDL_KEYDOWN, []() {
-        camera.setZMoveVector(glm::vec3(0, 0, -speed));
-    });
-    input.addBinding(SDLK_s, SDL_KEYUP, []() {
-        camera.setZMoveVector(glm::vec3(0, 0, 0));
     });
     input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
 	    camera.rotate(-0.03f);
@@ -196,13 +174,21 @@ int main(const int argc, const char** argv) {
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
 
-        wall.render();
-        wall2.render();
-        world->render();
+        wall.render(graphics);
+        wall2.render(graphics);
+        world->render(graphics);
 
         window.render();
         
         pollEvents();
+        cout << "hey" << endl;
+        vector<Command*> commands = input.pollCommands();
+        cout << "commands polled, executing now..." << endl;
+        for (auto& command : commands) {
+            cout << "executing command..." << endl;
+            command->execute(camera);
+        }
+        cout << "asdf" << endl;
     }
 
     window.close();
