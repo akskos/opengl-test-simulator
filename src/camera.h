@@ -18,7 +18,7 @@ public:
     glm::mat4 getMVP();
     void setXMoveVector(glm::vec3 vec);
     void setZMoveVector(glm::vec3 vec);
-    void rotate(double delta);
+    //void rotate(double delta);
     void vrotate(double delta);
     void instaHorizRotate(double delta);
     void instaVertiRotate(double delta);
@@ -26,6 +26,7 @@ public:
     void update(double interval);
     void render(Graphics graphics);
     void setMovingDirection(Util::Direction direction);
+    void rotate(int x, int y);
 
 private:
     glm::vec3 xMoveVector;

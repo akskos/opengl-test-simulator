@@ -52,12 +52,12 @@ void quit() {
 void pollEvents() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_MOUSEMOTION) {
+        /*if (event.type == SDL_MOUSEMOTION) {
             double hdelta = event.motion.xrel / 200.0;
             double vdelta = event.motion.yrel / 200.0;
             camera.instaHorizRotate(hdelta);
             camera.instaVertiRotate(vdelta);
-        }
+        }*/
         input.keyboardCallback(event);
         if (event.type == SDL_MOUSEBUTTONDOWN) {
             em.executeEvent("test");
@@ -87,7 +87,7 @@ int main(const int argc, const char** argv) {
         window.close();
 	    exit(0);
     });
-    input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
+    /*input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
 	    camera.rotate(-0.03f);
     });
     input.addBinding(SDLK_RIGHT, SDL_KEYDOWN, []() {
@@ -110,7 +110,7 @@ int main(const int argc, const char** argv) {
     });
     input.addBinding(SDLK_DOWN, SDL_KEYUP, []() {
 	    camera.vrotate(0);
-    });
+    });*/
 
     em.addEvent("test", []() {
         cout << "test event" << endl;
@@ -180,7 +180,6 @@ int main(const int argc, const char** argv) {
 
         window.render();
         
-        pollEvents();
         cout << "hey" << endl;
         vector<Command*> commands = input.pollCommands();
         cout << "commands polled, executing now..." << endl;
@@ -189,6 +188,12 @@ int main(const int argc, const char** argv) {
             command->execute(camera);
         }
         cout << "asdf" << endl;
+
+        const Uint8* keyState = SDL_GetKeyboardState(nullptr);
+        if (keyState[SDL_SCANCODE_ESCAPE]) {
+            window.close();
+            return 0;
+        }
     }
 
     window.close();

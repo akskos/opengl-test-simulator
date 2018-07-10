@@ -8,6 +8,8 @@ InputController::InputController() {
     arrowDown = nullptr;
     arrowLeft = new MoveCommand(Direction::LEFT);
     arrowDown = nullptr;
+    mouseMove = new RotateCommand();
+    leftMouseClick = nullptr;
 }
 
 void InputController::keyboardCallback(SDL_Event event) {
@@ -59,5 +61,18 @@ vector<Command*> InputController::pollCommands() {
         commands.push_back(new MoveCommand(Direction::STOP));
     }
     cout << "created new commands" << endl;
+
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_MOUSEMOTION) {
+            mouseMove->setCoordinates(
+                event.motion.xrel,
+                event.motion.yrel
+            );
+            commands.push_back(mouseMove); 
+            cout << "mousemove pushed back" << endl;
+        }
+    }
+
     return commands;
 }

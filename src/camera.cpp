@@ -28,13 +28,30 @@ void Camera::setXMoveVector(glm::vec3 vec) {
 void Camera::setZMoveVector(glm::vec3 vec) {
   zMoveVector = vec;
 }
-
+/*
 void Camera::rotate(double delta) {
     frontDelta = -delta;
-}
+}*/
 
 void Camera::vrotate(double delta) {
     vrotateDelta = -delta;    
+}
+
+void Camera::rotate(int x, int y) {
+
+  cout << "rotating..." << endl;
+  
+  double xdelta = x / 200.0;
+  glm::mat4 rotationMat = glm::rotate(glm::mat4(1), (float)-xdelta, up);
+  front = glm::vec3(rotationMat * glm::vec4(front, 1.0f));
+
+  double ydelta = y / 200.0;
+  glm::vec3 rotationAxis = glm::cross(front, up);
+  rotationMat = glm::rotate(glm::mat4(1), (float)-ydelta, rotationAxis);
+  glm::vec3 newFront = glm::vec3(rotationMat * glm::vec4(front, 1.0f));
+  if (newFront.y > -0.99 && newFront.y < 0.99) {
+    front = newFront;
+  }
 }
 
 void Camera::instaHorizRotate(double delta) {

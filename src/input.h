@@ -7,6 +7,7 @@
 
 #include "commands/Command.h"
 #include "commands/MoveCommand.h"
+#include "commands/RotateCommand.h"
 
 class InputController {
 public:
@@ -20,8 +21,10 @@ public:
 private:
     std::map<SDL_Keycode, std::map<int, std::function<void()>>> callbacks;
     
-    Command* arrowUp;
-    Command* arrowDown;
-    Command* arrowLeft;
-    Command* arrowRight;
+    KeyboardCommand* arrowUp;
+    KeyboardCommand* arrowDown;
+    KeyboardCommand* arrowLeft;
+    KeyboardCommand* arrowRight;
+    MouseCommand* mouseMove;
+    MouseCommand* leftMouseClick;
 };
