@@ -68,43 +68,38 @@ void Camera::update(double interval) {
   front = glm::vec3(vRotationMat * glm::vec4(front, 1.0));
 }
 
-void Camera::setMovingDirection(Direction direction) {
+void Camera::startMovingTo(Direction direction) {
   switch (direction) {
   case Direction::LEFT:
     setXMoveVector(glm::vec3(-4, 0, 0));
-    setZMoveVector(glm::vec3(0, 0, 0));
     break;
   case Direction::RIGHT:
     setXMoveVector(glm::vec3(4, 0, 0));
-    setZMoveVector(glm::vec3(0, 0, 0));
     break;
   case Direction::FORWARD:
-    setXMoveVector(glm::vec3(0, 0, 0));
     setZMoveVector(glm::vec3(0, 0, 4));
     break;
   case Direction::BACK:
-    setXMoveVector(glm::vec3(0, 0, 0));
     setZMoveVector(glm::vec3(0, 0, -4));
     break;
-  case Direction::STOP:
+  default:
+    break;
+  }
+}
+
+void Camera::stopMovingTo(Direction direction) {
+  switch (direction) {
+  case Direction::LEFT:
     setXMoveVector(glm::vec3(0, 0, 0));
+    break;
+  case Direction::RIGHT:
+    setXMoveVector(glm::vec3(0, 0, 0));
+    break;
+  case Direction::FORWARD:
     setZMoveVector(glm::vec3(0, 0, 0));
     break;
-  case Direction::LEFT_DIAGONAL_FORWARD:
-    setXMoveVector(glm::vec3(-4, 0, 0));
-    setZMoveVector(glm::vec3(0, 0, 4));
-    break;
-  case Direction::LEFT_DIAGONAL_BACKWARD:
-    setXMoveVector(glm::vec3(-4, 0, 0));
-    setZMoveVector(glm::vec3(0, 0, -4));
-    break;
-  case Direction::RIGHT_DIAGONAL_FORWARD:
-    setXMoveVector(glm::vec3(4, 0, 0));
-    setZMoveVector(glm::vec3(0, 0, 4));
-    break;
-  case Direction::RIGHT_DIAGONAL_BACKWARD:
-    setXMoveVector(glm::vec3(4, 0, 0));
-    setZMoveVector(glm::vec3(0, 0, -4));
+  case Direction::BACK:
+    setZMoveVector(glm::vec3(0, 0, 0));
     break;
   default:
     break;

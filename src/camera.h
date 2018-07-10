@@ -19,7 +19,8 @@ public:
 
     void update(double interval);
     void render(Graphics graphics);
-    void setMovingDirection(Util::Direction direction);
+    void startMovingTo(Util::Direction direction);
+    void stopMovingTo(Util::Direction direction);
     void rotate(int x, int y);
 
 private:

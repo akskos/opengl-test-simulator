@@ -7,7 +7,11 @@ direction(direction)
 {}
 
 void MoveCommand::execute(Actor& actor) {
-    actor.setMovingDirection(direction);
+    if (down) {
+        actor.startMovingTo(direction);
+    } else {
+        actor.stopMovingTo(direction);
+    }
 }
 
 void MoveCommand::setDown(bool down) {

@@ -12,10 +12,10 @@ public:
     std::vector<Command*> pollCommands();
 
 private:    
-    KeyboardCommand* arrowUp;
-    KeyboardCommand* arrowDown;
-    KeyboardCommand* arrowLeft;
-    KeyboardCommand* arrowRight;
+    KeyboardCommand* w;
+    KeyboardCommand* a;
+    KeyboardCommand* s;
+    KeyboardCommand* d;
     MouseCommand* mouseMove;
     MouseCommand* leftMouseClick;
 };

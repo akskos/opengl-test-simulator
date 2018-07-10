@@ -4,45 +4,64 @@ using namespace std;
 typedef Util::Direction Direction;
 
 InputController::InputController() {
-    arrowUp = nullptr;
-    arrowDown = nullptr;
-    arrowLeft = new MoveCommand(Direction::LEFT);
-    arrowDown = nullptr;
+    w = new MoveCommand(Direction::FORWARD);
+    a = new MoveCommand(Direction::LEFT);
+    s = new MoveCommand(Direction::BACK);
+    d = new MoveCommand(Direction::RIGHT);
     mouseMove = new RotateCommand();
     leftMouseClick = nullptr;
 }
 
 vector<Command*> InputController::pollCommands() {
     vector<Command*> commands;
-    SDL_PumpEvents();
-    const Uint8* keyState = SDL_GetKeyboardState(nullptr);
-    Uint8 left = keyState[SDL_SCANCODE_A];
-    Uint8 right = keyState[SDL_SCANCODE_D];
-    Uint8 up = keyState[SDL_SCANCODE_W];
-    Uint8 down = keyState[SDL_SCANCODE_S];
-    if (left && up) {
-        commands.push_back(new MoveCommand(Direction::LEFT_DIAGONAL_FORWARD));
-    } else if (left && down) {
-        commands.push_back(new MoveCommand(Direction::LEFT_DIAGONAL_BACKWARD));
-    } else if (left) {
-        commands.push_back(new MoveCommand(Direction::LEFT));
-    } else if (right && up) {
-        commands.push_back(new MoveCommand(Direction::RIGHT_DIAGONAL_FORWARD));
-    } else if (right && down) {
-        commands.push_back(new MoveCommand(Direction::RIGHT_DIAGONAL_BACKWARD));
-    } else if (right) {
-        commands.push_back(new MoveCommand(Direction::RIGHT));
-    } else if (up) {
-        commands.push_back(new MoveCommand(Direction::FORWARD));
-    } else if (down) {
-        commands.push_back(new MoveCommand(Direction::BACK));
-    } else {
-        commands.push_back(new MoveCommand(Direction::STOP));
-    }
 
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_MOUSEMOTION) {
+        if (event.type == SDL_KEYDOWN) {
+            SDL_Keycode key = event.key.keysym.sym;
+            switch (key) {
+            case SDLK_a:
+                a->setDown(true);
+                commands.push_back(a);
+                break;
+            case SDLK_d:
+                d->setDown(true);
+                commands.push_back(d);
+                break;
+            case SDLK_w:
+                w->setDown(true);
+                commands.push_back(w);
+                break;
+            case SDLK_s:
+                s->setDown(true);
+                commands.push_back(s);
+                break;
+            default:
+                break;
+            }
+        } else if (event.type == SDL_KEYUP) {
+            SDL_Keycode key = event.key.keysym.sym;
+            switch (key) {
+            case SDLK_a:
+                a->setDown(false);
+                commands.push_back(a);
+                break;
+            case SDLK_d:
+                d->setDown(false);
+                commands.push_back(d);
+                break;
+            case SDLK_w:
+                w->setDown(false);
+                commands.push_back(w);
+                break;
+            case SDLK_s:
+                s->setDown(false);
+                commands.push_back(s);
+                break;
+            default:
+                break;
+            }
+        } else if (event.type == SDL_MOUSEMOTION) {
             mouseMove->setCoordinates(
                 event.motion.xrel,
                 event.motion.yrel

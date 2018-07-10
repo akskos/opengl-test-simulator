@@ -7,12 +7,7 @@ public:
         FORWARD,
         BACK,
         LEFT,
-        RIGHT,
-        LEFT_DIAGONAL_FORWARD,
-        LEFT_DIAGONAL_BACKWARD,
-        RIGHT_DIAGONAL_FORWARD,
-        RIGHT_DIAGONAL_BACKWARD,
-        STOP
+        RIGHT
     };
 };
 
