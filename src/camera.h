@@ -11,17 +11,11 @@
 #include "Graphics.h"
 #include "commands/MoveCommand.h"
 #include "Util.h"
+#include "objects/Renderable.h"
 
-class Camera: public Actor {
+class Camera: public Actor, public Renderable  {
 public:
     Camera();
-    glm::mat4 getMVP();
-    void setXMoveVector(glm::vec3 vec);
-    void setZMoveVector(glm::vec3 vec);
-    //void rotate(double delta);
-    void vrotate(double delta);
-    void instaHorizRotate(double delta);
-    void instaVertiRotate(double delta);
 
     void update(double interval);
     void render(Graphics graphics);
@@ -42,4 +36,7 @@ private:
     const float aspect_ratio = 1.0;
 
     void move(glm::vec3 vec, double interval);
+    glm::mat4 getMVP();
+    void setXMoveVector(glm::vec3 vec);
+    void setZMoveVector(glm::vec3 vec);
 };
