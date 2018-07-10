@@ -38,9 +38,6 @@ void Camera::vrotate(double delta) {
 }
 
 void Camera::rotate(int x, int y) {
-
-  cout << "rotating..." << endl;
-  
   double xdelta = x / 200.0;
   glm::mat4 rotationMat = glm::rotate(glm::mat4(1), (float)-xdelta, up);
   front = glm::vec3(rotationMat * glm::vec4(front, 1.0f));

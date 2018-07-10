@@ -12,35 +12,14 @@ InputController::InputController() {
     leftMouseClick = nullptr;
 }
 
-void InputController::keyboardCallback(SDL_Event event) {
-    SDL_Keycode key = event.key.keysym.sym;
-    if (callbacks.find(key) == callbacks.end()) {
-	return;
-    }
-    if (callbacks[key].find(event.type) == callbacks[key].end()) {
-	return;
-    }
-    callbacks[key][event.type]();
-}
-
-void InputController::addBinding(SDL_Keycode key, unsigned int action, std::function<void()> callback) {
-    callbacks[key][action] = callback;
-}
-
 vector<Command*> InputController::pollCommands() {
     vector<Command*> commands;
-    cout << "getting keyboard state" << endl;
     SDL_PumpEvents();
-    int numkeys;
-    const Uint8* keyState = SDL_GetKeyboardState(&numkeys);
-    cout << "got " << numkeys << " key states" << endl;
-    cout << "got keyboard state" << endl;
+    const Uint8* keyState = SDL_GetKeyboardState(nullptr);
     Uint8 left = keyState[SDL_SCANCODE_A];
-    cout << "left assigned" << endl;
     Uint8 right = keyState[SDL_SCANCODE_D];
     Uint8 up = keyState[SDL_SCANCODE_W];
     Uint8 down = keyState[SDL_SCANCODE_S];
-    cout << "assigned boolean variables" << endl;
     if (left && up) {
         commands.push_back(new MoveCommand(Direction::LEFT_DIAGONAL_FORWARD));
     } else if (left && down) {
@@ -60,7 +39,6 @@ vector<Command*> InputController::pollCommands() {
     } else {
         commands.push_back(new MoveCommand(Direction::STOP));
     }
-    cout << "created new commands" << endl;
 
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -70,7 +48,8 @@ vector<Command*> InputController::pollCommands() {
                 event.motion.yrel
             );
             commands.push_back(mouseMove); 
-            cout << "mousemove pushed back" << endl;
+        } else if (event.type == SDL_QUIT) {
+            // Quit
         }
     }
 

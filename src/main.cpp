@@ -49,22 +49,6 @@ void quit() {
     exit(0);
 }
 
-void pollEvents() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        /*if (event.type == SDL_MOUSEMOTION) {
-            double hdelta = event.motion.xrel / 200.0;
-            double vdelta = event.motion.yrel / 200.0;
-            camera.instaHorizRotate(hdelta);
-            camera.instaVertiRotate(vdelta);
-        }*/
-        input.keyboardCallback(event);
-        if (event.type == SDL_MOUSEBUTTONDOWN) {
-            em.executeEvent("test");
-        }
-    }
-}
-
 int main(const int argc, const char** argv) {
     Config::initWithDefaults();
     options::parseOptions(argc, argv);
@@ -78,43 +62,6 @@ int main(const int argc, const char** argv) {
 
     SDL_GL_SetSwapInterval(1);
     SDL_SetRelativeMouseMode(SDL_TRUE);
-
-    input.addBinding(SDLK_ESCAPE, SDL_KEYUP, [&]() {
-        window.close();
-	    exit(0);
-    });
-    input.addBinding(SDLK_UNKNOWN, SDL_QUIT, [&]() {
-        window.close();
-	    exit(0);
-    });
-    /*input.addBinding(SDLK_LEFT, SDL_KEYDOWN, []() {
-	    camera.rotate(-0.03f);
-    });
-    input.addBinding(SDLK_RIGHT, SDL_KEYDOWN, []() {
-	    camera.rotate(0.03f);
-    });
-    input.addBinding(SDLK_LEFT, SDL_KEYUP, []() {
-	    camera.rotate(0);
-    });
-    input.addBinding(SDLK_RIGHT, SDL_KEYUP, []() {
-	    camera.rotate(0);
-    });
-    input.addBinding(SDLK_UP, SDL_KEYDOWN, []() {
-	    camera.vrotate(-0.03f);
-    });
-    input.addBinding(SDLK_DOWN, SDL_KEYDOWN, []() {
-	    camera.vrotate(0.03f);
-    });
-    input.addBinding(SDLK_UP, SDL_KEYUP, []() {
-	    camera.vrotate(0);
-    });
-    input.addBinding(SDLK_DOWN, SDL_KEYUP, []() {
-	    camera.vrotate(0);
-    });*/
-
-    em.addEvent("test", []() {
-        cout << "test event" << endl;
-    });
 
     if (!graphics.init()) {
         cout << "Failed to init graphics" << endl;
@@ -180,14 +127,10 @@ int main(const int argc, const char** argv) {
 
         window.render();
         
-        cout << "hey" << endl;
         vector<Command*> commands = input.pollCommands();
-        cout << "commands polled, executing now..." << endl;
         for (auto& command : commands) {
-            cout << "executing command..." << endl;
             command->execute(camera);
         }
-        cout << "asdf" << endl;
 
         const Uint8* keyState = SDL_GetKeyboardState(nullptr);
         if (keyState[SDL_SCANCODE_ESCAPE]) {
