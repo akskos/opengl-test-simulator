@@ -17,45 +17,24 @@ vector<Command*> InputController::pollCommands() {
 
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_KEYDOWN) {
+        if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
+            bool down = (event.type == SDL_KEYDOWN);
             SDL_Keycode key = event.key.keysym.sym;
             switch (key) {
             case SDLK_a:
-                a->setDown(true);
+                a->setDown(down);
                 commands.push_back(a);
                 break;
             case SDLK_d:
-                d->setDown(true);
+                d->setDown(down);
                 commands.push_back(d);
                 break;
             case SDLK_w:
-                w->setDown(true);
+                w->setDown(down);
                 commands.push_back(w);
                 break;
             case SDLK_s:
-                s->setDown(true);
-                commands.push_back(s);
-                break;
-            default:
-                break;
-            }
-        } else if (event.type == SDL_KEYUP) {
-            SDL_Keycode key = event.key.keysym.sym;
-            switch (key) {
-            case SDLK_a:
-                a->setDown(false);
-                commands.push_back(a);
-                break;
-            case SDLK_d:
-                d->setDown(false);
-                commands.push_back(d);
-                break;
-            case SDLK_w:
-                w->setDown(false);
-                commands.push_back(w);
-                break;
-            case SDLK_s:
-                s->setDown(false);
+                s->setDown(down);
                 commands.push_back(s);
                 break;
             default:
