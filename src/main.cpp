@@ -60,9 +60,6 @@ int main(const int argc, const char** argv) {
 
     Graphics graphics;
 
-    SDL_GL_SetSwapInterval(1);
-    SDL_SetRelativeMouseMode(SDL_TRUE);
-
     if (!graphics.init()) {
         cout << "Failed to init graphics" << endl;
         window.close();
