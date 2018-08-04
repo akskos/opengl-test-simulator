@@ -66,10 +66,6 @@ int main(const int argc, const char** argv) {
         return 1;
     }
 
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
     GLuint vbo;
     glGenBuffers(1, &vbo);
 

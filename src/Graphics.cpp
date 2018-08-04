@@ -13,6 +13,7 @@ bool Graphics::init() {
         cout << "Failed to load shaders" << endl;
         return false;
     }
+    initVAO();
     return true;
 }
 
@@ -40,4 +41,9 @@ void Graphics::clear() {
 
 void Graphics::updateMVP(glm::mat4 mvp) {
     glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
+}
+
+void Graphics::initVAO() {
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 }

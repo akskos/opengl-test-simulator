@@ -21,7 +21,9 @@ public:
 private:
     bool initGlew();
     bool loadShaders();
+    void initVAO();
 
+    GLuint vao;
     GLuint matrixId;
 };
 
